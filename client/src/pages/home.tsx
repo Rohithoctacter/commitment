@@ -564,13 +564,13 @@ export default function Home() {
             </Card>
 
             {/* Progress History */}
-            <Card className="bg-card shadow-lg flex flex-col">
-              <CardContent className="p-6 flex-1 flex flex-col justify-center">
-                <h3 className="text-lg font-bold text-card-foreground mb-4 text-center">This Week's Progress</h3>
-                <div className="flex justify-center space-x-2 mb-4" data-testid="week-progress">
+            <Card className="bg-card shadow-lg">
+              <CardContent className="p-4">
+                <h3 className="text-base font-bold text-card-foreground mb-3 text-center">This Week's Progress</h3>
+                <div className="flex justify-center space-x-2 mb-3" data-testid="week-progress">
                   {renderWeekProgress()}
                 </div>
-                <div className="text-center mt-auto">
+                <div className="text-center">
                   <p className="text-xs text-muted-foreground">
                     Goal started on <span className="font-semibold text-card-foreground" data-testid="text-start-date">{formatDate(state.startDate)}</span>
                   </p>
