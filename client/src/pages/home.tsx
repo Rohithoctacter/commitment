@@ -489,21 +489,21 @@ export default function Home() {
           </div>
 
           {/* Right Side Content - 2 Columns */}
-          <div className="lg:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="lg:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-4 auto-rows-fr">
             {/* Current Achievement */}
-            <Card className={`${getCurrentAchievement().bgColor} border-2 shadow-lg h-fit`}>
-              <CardContent className="p-6">
+            <Card className={`${getCurrentAchievement().bgColor} border-2 shadow-lg flex flex-col`}>
+              <CardContent className="p-6 flex-1 flex flex-col justify-center">
                 <div className="text-center">
-                  <div className={`w-16 h-16 bg-gradient-to-r ${getCurrentAchievement().color} rounded-full flex items-center justify-center mx-auto mb-3 shadow-lg`}>
+                  <div className={`w-16 h-16 bg-gradient-to-r ${getCurrentAchievement().color} rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg`}>
                     {(() => {
                       const IconComponent = getCurrentAchievement().icon;
                       return <IconComponent className={`text-2xl ${getCurrentAchievement().textColor}`} />;
                     })()}
                   </div>
-                  <h3 className="text-xl font-bold text-card-foreground mb-2" data-testid="achievement-title">
+                  <h3 className="text-xl font-bold text-card-foreground mb-3" data-testid="achievement-title">
                     {getCurrentAchievement().title}
                   </h3>
-                  <p className="text-sm text-muted-foreground mb-3" data-testid="achievement-description">
+                  <p className="text-sm text-muted-foreground mb-4" data-testid="achievement-description">
                     {getCurrentAchievement().description}
                   </p>
                   <div className="text-xs text-muted-foreground">
@@ -515,10 +515,10 @@ export default function Home() {
 
             {/* Next Achievement Preview */}
             {getNextAchievement() && (
-              <Card className="bg-gradient-to-br from-muted/50 to-accent/10 border border-dashed border-muted-foreground/30 shadow-lg">
-                <CardContent className="p-6 h-full flex flex-col justify-center">
+              <Card className="bg-gradient-to-br from-muted/50 to-accent/10 border border-dashed border-muted-foreground/30 shadow-lg flex flex-col">
+                <CardContent className="p-6 flex-1 flex flex-col justify-center">
                   <div className="text-center">
-                    <div className="text-lg font-semibold text-muted-foreground mb-6">🎯 Next Achievement</div>
+                    <div className="text-lg font-semibold text-muted-foreground mb-4">🎯 Next Achievement</div>
                     <div className={`w-16 h-16 bg-gradient-to-r ${getNextAchievement()!.color} rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg opacity-75`}>
                       {(() => {
                         const IconComponent = getNextAchievement()!.icon;
@@ -531,7 +531,7 @@ export default function Home() {
                     <p className="text-sm text-muted-foreground mb-4" data-testid="next-achievement-description">
                       Unlock at {getNextAchievement()!.minPercent}% completion
                     </p>
-                    <div className="w-full bg-muted rounded-full h-2 mt-4">
+                    <div className="w-full bg-muted rounded-full h-2 mt-2">
                       <div 
                         className={`bg-gradient-to-r ${getNextAchievement()!.color} h-2 rounded-full transition-all duration-500 opacity-50`}
                         style={{ width: `${Math.min(100, (progressPercentage / getNextAchievement()!.minPercent) * 100)}%` }}
@@ -546,11 +546,11 @@ export default function Home() {
             )}
 
             {/* Motivational Quote */}
-            <Card className="bg-gradient-to-br from-accent/10 to-warning/10 border border-accent/20 shadow-lg h-fit">
-              <CardContent className="p-6">
+            <Card className="bg-gradient-to-br from-accent/10 to-warning/10 border border-accent/20 shadow-lg flex flex-col">
+              <CardContent className="p-6 flex-1 flex flex-col justify-center">
                 <div className="text-center">
-                  <div className="text-2xl mb-3">💪</div>
-                  <h3 className="text-lg font-bold text-card-foreground mb-3">Daily Motivation</h3>
+                  <div className="text-2xl mb-4">💪</div>
+                  <h3 className="text-lg font-bold text-card-foreground mb-4">Daily Motivation</h3>
                   <blockquote className="text-sm italic text-muted-foreground leading-relaxed">
                     {progressPercentage === 0 && "Every journey begins with a single step. You've got this!"}
                     {progressPercentage > 0 && progressPercentage < 25 && "Discipline is choosing between what you want now and what you want most."}
@@ -564,13 +564,13 @@ export default function Home() {
             </Card>
 
             {/* Progress History */}
-            <Card className="bg-card shadow-lg h-fit">
-              <CardContent className="p-6">
+            <Card className="bg-card shadow-lg flex flex-col">
+              <CardContent className="p-6 flex-1 flex flex-col justify-center">
                 <h3 className="text-lg font-bold text-card-foreground mb-4 text-center">This Week's Progress</h3>
                 <div className="flex justify-center space-x-2 mb-4" data-testid="week-progress">
                   {renderWeekProgress()}
                 </div>
-                <div className="text-center">
+                <div className="text-center mt-auto">
                   <p className="text-xs text-muted-foreground">
                     Goal started on <span className="font-semibold text-card-foreground" data-testid="text-start-date">{formatDate(state.startDate)}</span>
                   </p>
