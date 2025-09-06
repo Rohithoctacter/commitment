@@ -595,8 +595,219 @@ export default function Home() {
           </Card>
         )}
 
+        {/* Achievement Progress Section */}
+        <div className="mt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <Card className="bg-card shadow-lg">
+            <CardContent className="p-6">
+              <h3 className="text-lg font-bold text-card-foreground mb-4">Achievement Progress</h3>
+              <div className="space-y-3">
+                {getAchievements().map((achievement, index) => {
+                  const current = getCurrentAchievement();
+                  const isUnlocked = progressPercentage >= achievement.minPercent;
+                  const isCurrent = current.title === achievement.title;
+                  
+                  return (
+                    <div key={index} className={`flex items-center space-x-3 p-2 rounded-lg ${isCurrent ? 'bg-primary/10 border border-primary/20' : isUnlocked ? 'bg-green-50 dark:bg-green-900/20' : 'bg-muted/50'}`}>
+                      <div className={`w-8 h-8 rounded-full flex items-center justify-center ${isUnlocked ? `bg-gradient-to-r ${achievement.color}` : 'bg-muted border-2 border-dashed'} shadow-sm`}>
+                        {(() => {
+                          const IconComponent = achievement.icon;
+                          return <IconComponent className={`text-sm ${isUnlocked ? achievement.textColor : 'text-muted-foreground'}`} />;
+                        })()}
+                      </div>
+                      <div className="flex-1">
+                        <div className={`text-sm font-semibold ${isUnlocked ? 'text-card-foreground' : 'text-muted-foreground'}`}>
+                          {achievement.title}
+                        </div>
+                        <div className="text-xs text-muted-foreground">
+                          {isUnlocked ? '✅ Unlocked' : `Unlock at ${achievement.minPercent}%`}
+                        </div>
+                      </div>
+                      {isCurrent && <div className="text-xs bg-primary text-primary-foreground px-2 py-1 rounded-full">Current</div>}
+                    </div>
+                  );
+                })}
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card className="bg-card shadow-lg">
+            <CardContent className="p-6">
+              <h3 className="text-lg font-bold text-card-foreground mb-4">Quick Stats</h3>
+              <div className="space-y-4">
+                <div className="flex justify-between items-center p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
+                  <span className="text-sm font-medium text-card-foreground">Success Rate</span>
+                  <span className="text-lg font-bold text-blue-600 dark:text-blue-400">
+                    {state.goalDays > 0 ? Math.round((state.completedDays / state.goalDays) * 100) : 0}%
+                  </span>
+                </div>
+                <div className="flex justify-between items-center p-3 bg-green-50 dark:bg-green-900/20 rounded-lg">
+                  <span className="text-sm font-medium text-card-foreground">Days Remaining</span>
+                  <span className="text-lg font-bold text-green-600 dark:text-green-400">{remainingDays}</span>
+                </div>
+                <div className="flex justify-between items-center p-3 bg-purple-50 dark:bg-purple-900/20 rounded-lg">
+                  <span className="text-sm font-medium text-card-foreground">Current Streak</span>
+                  <span className="text-lg font-bold text-purple-600 dark:text-purple-400">{state.completedDays} days</span>
+                </div>
+                <div className="flex justify-between items-center p-3 bg-orange-50 dark:bg-orange-900/20 rounded-lg">
+                  <span className="text-sm font-medium text-card-foreground">Days Left</span>
+                  <span className="text-lg font-bold text-orange-600 dark:text-orange-400">
+                    {remainingDays > 0 ? `${remainingDays} to go` : 'Complete!'}
+                  </span>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card className="bg-card shadow-lg">
+            <CardContent className="p-6">
+              <h3 className="text-lg font-bold text-card-foreground mb-4">Motivation Boost</h3>
+              <div className="space-y-4">
+                <div className="text-center p-4 bg-gradient-to-r from-success/10 to-primary/10 rounded-lg border border-success/20">
+                  <div className="text-2xl mb-2">🎯</div>
+                  <div className="text-sm font-semibold text-card-foreground mb-1">Today's Focus</div>
+                  <div className="text-xs text-muted-foreground">Stay committed to your goal</div>
+                </div>
+                <div className="text-center p-4 bg-gradient-to-r from-warning/10 to-accent/10 rounded-lg border border-warning/20">
+                  <div className="text-2xl mb-2">💪</div>
+                  <div className="text-sm font-semibold text-card-foreground mb-1">Strength Builder</div>
+                  <div className="text-xs text-muted-foreground">Every day makes you stronger</div>
+                </div>
+                <div className="text-center p-4 bg-gradient-to-r from-purple-100/10 to-pink-100/10 rounded-lg border border-purple-200/20">
+                  <div className="text-2xl mb-2">🌟</div>
+                  <div className="text-sm font-semibold text-card-foreground mb-1">You've Got This</div>
+                  <div className="text-xs text-muted-foreground">Believe in your willpower</div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* Detailed Progress Analytics */}
+        <div className="mt-6 grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <Card className="bg-card shadow-lg">
+            <CardContent className="p-6">
+              <h3 className="text-lg font-bold text-card-foreground mb-4">Progress Analytics</h3>
+              <div className="space-y-4">
+                <div>
+                  <div className="flex justify-between text-sm mb-2">
+                    <span className="text-muted-foreground">Goal Completion</span>
+                    <span className="font-semibold">{progressPercentage}%</span>
+                  </div>
+                  <div className="w-full bg-muted rounded-full h-3">
+                    <div 
+                      className="bg-gradient-to-r from-primary to-secondary h-3 rounded-full transition-all duration-500"
+                      style={{ width: `${progressPercentage}%` }}
+                    ></div>
+                  </div>
+                </div>
+                
+                <div>
+                  <div className="flex justify-between text-sm mb-2">
+                    <span className="text-muted-foreground">Achievement Progress</span>
+                    <span className="font-semibold">
+                      {getAchievements().findIndex(a => a.title === getCurrentAchievement().title) + 1} / {getAchievements().length}
+                    </span>
+                  </div>
+                  <div className="w-full bg-muted rounded-full h-3">
+                    <div 
+                      className="bg-gradient-to-r from-yellow-400 to-orange-500 h-3 rounded-full transition-all duration-500"
+                      style={{ width: `${((getAchievements().findIndex(a => a.title === getCurrentAchievement().title) + 1) / getAchievements().length) * 100}%` }}
+                    ></div>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-3 gap-2 mt-4">
+                  <div className="text-center p-2 bg-muted rounded-lg">
+                    <div className="text-lg font-bold text-card-foreground">{Math.round((state.completedDays / state.goalDays) * 100) || 0}%</div>
+                    <div className="text-xs text-muted-foreground">Success Rate</div>
+                  </div>
+                  <div className="text-center p-2 bg-muted rounded-lg">
+                    <div className="text-lg font-bold text-card-foreground">{state.goalDays > 0 ? Math.ceil(state.goalDays / 7) : 0}</div>
+                    <div className="text-xs text-muted-foreground">Total Weeks</div>
+                  </div>
+                  <div className="text-center p-2 bg-muted rounded-lg">
+                    <div className="text-lg font-bold text-card-foreground">{Math.ceil(remainingDays / 7)}</div>
+                    <div className="text-xs text-muted-foreground">Weeks Left</div>
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card className="bg-card shadow-lg">
+            <CardContent className="p-6">
+              <h3 className="text-lg font-bold text-card-foreground mb-4">Journey Timeline</h3>
+              <div className="space-y-3">
+                <div className="flex items-center space-x-3 p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
+                  <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
+                  <div>
+                    <div className="text-sm font-semibold text-card-foreground">Goal Started</div>
+                    <div className="text-xs text-muted-foreground">{formatDate(state.startDate)}</div>
+                  </div>
+                </div>
+                
+                {state.completedDays > 0 && (
+                  <div className="flex items-center space-x-3 p-3 bg-green-50 dark:bg-green-900/20 rounded-lg">
+                    <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+                    <div>
+                      <div className="text-sm font-semibold text-card-foreground">Latest Check-in</div>
+                      <div className="text-xs text-muted-foreground">{formatLastCheckIn(state.lastCheckIn)}</div>
+                    </div>
+                  </div>
+                )}
+
+                {remainingDays > 0 && (
+                  <div className="flex items-center space-x-3 p-3 bg-orange-50 dark:bg-orange-900/20 rounded-lg">
+                    <div className="w-3 h-3 bg-orange-500 rounded-full"></div>
+                    <div>
+                      <div className="text-sm font-semibold text-card-foreground">Goal Completion</div>
+                      <div className="text-xs text-muted-foreground">
+                        {remainingDays} days remaining ({new Date(Date.now() + remainingDays * 24 * 60 * 60 * 1000).toLocaleDateString()})
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                <div className="flex items-center space-x-3 p-3 bg-purple-50 dark:bg-purple-900/20 rounded-lg">
+                  <div className="w-3 h-3 bg-purple-500 rounded-full"></div>
+                  <div>
+                    <div className="text-sm font-semibold text-card-foreground">Current Achievement</div>
+                    <div className="text-xs text-muted-foreground">{getCurrentAchievement().title}</div>
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* Tips and Insights */}
+        <div className="mt-6">
+          <Card className="bg-gradient-to-r from-accent/5 to-warning/5 border border-accent/20 shadow-lg">
+            <CardContent className="p-6">
+              <h3 className="text-lg font-bold text-card-foreground mb-4 text-center">💡 Commitment Tips & Insights</h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div className="text-center p-4 bg-white/50 dark:bg-black/20 rounded-lg">
+                  <div className="text-2xl mb-2">🧠</div>
+                  <div className="text-sm font-semibold text-card-foreground mb-2">Mental Strength</div>
+                  <div className="text-xs text-muted-foreground">Discipline is like a muscle - it gets stronger with practice and consistency.</div>
+                </div>
+                <div className="text-center p-4 bg-white/50 dark:bg-black/20 rounded-lg">
+                  <div className="text-2xl mb-2">⏰</div>
+                  <div className="text-sm font-semibold text-card-foreground mb-2">Timing Matters</div>
+                  <div className="text-xs text-muted-foreground">Check in daily at the same time to build a strong habit loop.</div>
+                </div>
+                <div className="text-center p-4 bg-white/50 dark:bg-black/20 rounded-lg">
+                  <div className="text-2xl mb-2">🎯</div>
+                  <div className="text-sm font-semibold text-card-foreground mb-2">Stay Focused</div>
+                  <div className="text-xs text-muted-foreground">Remember your 'why' - the deeper reason behind your commitment.</div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+
         {/* Footer with Action Button */}
-        <div className="mt-6 flex flex-col items-center space-y-4">
+        <div className="mt-8 flex flex-col items-center space-y-4 pb-8">
           <Button
             variant="secondary"
             className="bg-muted hover:bg-accent text-muted-foreground hover:text-accent-foreground font-semibold py-3 px-6 rounded-lg text-base"
