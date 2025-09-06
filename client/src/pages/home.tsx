@@ -390,66 +390,65 @@ export default function Home() {
     );
   }
 
-  // Tracking State - Clean professional interface
+  // Tracking State - Optimized compact layout
   return (
-    <div className="min-h-screen bg-gradient-to-br from-primary/5 via-background to-accent/5 p-4">
-      <div className="max-w-6xl mx-auto pt-8">
-
+    <div className="min-h-screen bg-gradient-to-br from-primary/5 via-background to-accent/5 p-3">
+      <div className="max-w-7xl mx-auto py-4">
         {/* Main Stats Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
           {/* Days Set */}
-          <Card className="bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-950 dark:to-blue-900 border-blue-200 dark:border-blue-800 shadow-xl">
-            <CardContent className="p-8 text-center">
-              <div className="text-5xl font-bold text-blue-600 dark:text-blue-400 mb-3" data-testid="text-total-days">
+          <Card className="bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-950 dark:to-blue-900 border-blue-200 dark:border-blue-800 shadow-lg">
+            <CardContent className="p-4 text-center">
+              <div className="text-3xl font-bold text-blue-600 dark:text-blue-400 mb-2" data-testid="text-total-days">
                 {state.goalDays}
               </div>
-              <div className="text-lg font-semibold text-blue-700 dark:text-blue-300">Days Set</div>
-              <div className="text-sm text-blue-600 dark:text-blue-400 mt-2">Your commitment period</div>
+              <div className="text-sm font-semibold text-blue-700 dark:text-blue-300">Days Set</div>
+              <div className="text-xs text-blue-600 dark:text-blue-400 mt-1">Your commitment period</div>
             </CardContent>
           </Card>
 
           {/* Days Done */}
-          <Card className="bg-gradient-to-br from-green-50 to-green-100 dark:from-green-950 dark:to-green-900 border-green-200 dark:border-green-800 shadow-xl">
-            <CardContent className="p-8 text-center">
-              <div className="text-5xl font-bold text-green-600 dark:text-green-400 mb-3" data-testid="text-completed-days">
+          <Card className="bg-gradient-to-br from-green-50 to-green-100 dark:from-green-950 dark:to-green-900 border-green-200 dark:border-green-800 shadow-lg">
+            <CardContent className="p-4 text-center">
+              <div className="text-3xl font-bold text-green-600 dark:text-green-400 mb-2" data-testid="text-completed-days">
                 {state.completedDays}
               </div>
-              <div className="text-lg font-semibold text-green-700 dark:text-green-300">Days Done</div>
-              <div className="text-sm text-green-600 dark:text-green-400 mt-2">Successfully completed</div>
+              <div className="text-sm font-semibold text-green-700 dark:text-green-300">Days Done</div>
+              <div className="text-xs text-green-600 dark:text-green-400 mt-1">Successfully completed</div>
             </CardContent>
           </Card>
 
           {/* Days Left */}
-          <Card className="bg-gradient-to-br from-orange-50 to-orange-100 dark:from-orange-950 dark:to-orange-900 border-orange-200 dark:border-orange-800 shadow-xl">
-            <CardContent className="p-8 text-center">
-              <div className="text-5xl font-bold text-orange-600 dark:text-orange-400 mb-3" data-testid="text-remaining-days">
+          <Card className="bg-gradient-to-br from-orange-50 to-orange-100 dark:from-orange-950 dark:to-orange-900 border-orange-200 dark:border-orange-800 shadow-lg">
+            <CardContent className="p-4 text-center">
+              <div className="text-3xl font-bold text-orange-600 dark:text-orange-400 mb-2" data-testid="text-remaining-days">
                 {remainingDays}
               </div>
-              <div className="text-lg font-semibold text-orange-700 dark:text-orange-300">Days Left</div>
-              <div className="text-sm text-orange-600 dark:text-orange-400 mt-2">Keep pushing forward</div>
+              <div className="text-sm font-semibold text-orange-700 dark:text-orange-300">Days Left</div>
+              <div className="text-xs text-orange-600 dark:text-orange-400 mt-1">Keep pushing forward</div>
             </CardContent>
           </Card>
 
           {/* Percentage Done */}
-          <Card className="bg-gradient-to-br from-purple-50 to-purple-100 dark:from-purple-950 dark:to-purple-900 border-purple-200 dark:border-purple-800 shadow-xl">
-            <CardContent className="p-8 text-center">
-              <div className="text-5xl font-bold text-purple-600 dark:text-purple-400 mb-3" data-testid="text-progress-percentage">
+          <Card className="bg-gradient-to-br from-purple-50 to-purple-100 dark:from-purple-950 dark:to-purple-900 border-purple-200 dark:border-purple-800 shadow-lg">
+            <CardContent className="p-4 text-center">
+              <div className="text-3xl font-bold text-purple-600 dark:text-purple-400 mb-2" data-testid="text-progress-percentage">
                 {progressPercentage}%
               </div>
-              <div className="text-lg font-semibold text-purple-700 dark:text-purple-300">Completed</div>
-              <div className="text-sm text-purple-600 dark:text-purple-400 mt-2">Of your goal achieved</div>
+              <div className="text-sm font-semibold text-purple-700 dark:text-purple-300">Completed</div>
+              <div className="text-xs text-purple-600 dark:text-purple-400 mt-1">Of your goal achieved</div>
             </CardContent>
           </Card>
         </div>
 
-        {/* Main Content Row */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-          {/* Progress Circle */}
-          <div className="flex flex-col items-center">
-            <Card className="bg-card rounded-2xl shadow-2xl border border-border w-full max-w-md">
-              <CardContent className="p-10">
-                <div className="relative flex items-center justify-center mb-8">
-                  <svg className="progress-circle w-64 h-64" viewBox="0 0 160 160">
+        {/* Main Content */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          {/* Progress Circle - Left Column */}
+          <div className="lg:col-span-1">
+            <Card className="bg-card rounded-xl shadow-lg border border-border h-fit">
+              <CardContent className="p-6">
+                <div className="relative flex items-center justify-center mb-6">
+                  <svg className="progress-circle w-48 h-48" viewBox="0 0 160 160">
                     <circle className="progress-circle-bg" cx="80" cy="80" r="72"></circle>
                     <circle
                       className="progress-circle-fill"
@@ -462,55 +461,53 @@ export default function Home() {
                   </svg>
                   
                   <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
-                    <div className="text-6xl font-bold text-primary mb-2">
+                    <div className="text-4xl font-bold text-primary mb-1">
                       {state.completedDays}
                     </div>
-                    <div className="text-lg text-muted-foreground mb-3">days completed</div>
-                    <div className="text-4xl font-semibold text-card-foreground">
+                    <div className="text-sm text-muted-foreground mb-2">days completed</div>
+                    <div className="text-2xl font-semibold text-card-foreground">
                       {progressPercentage}%
                     </div>
                   </div>
                 </div>
 
-                <div className="text-center">
-                  <Button
-                    className="w-full bg-gradient-to-r from-primary to-secondary hover:from-secondary hover:to-primary text-primary-foreground font-bold py-6 px-8 shadow-2xl hover:shadow-3xl transform hover:scale-105 transition-all duration-300 rounded-xl text-xl"
-                    onClick={handleCheckIn}
-                    disabled={state.completedDays >= state.goalDays}
-                    data-testid="button-check-in"
-                  >
-                    <CheckCircle className="mr-3 h-6 w-6" />
-                    {state.completedDays >= state.goalDays ? "🎉 Goal Complete!" : "✅ I stayed committed yesterday!"}
-                  </Button>
-                  
-                  <p className="text-base text-muted-foreground mt-4">
-                    Last check-in: <span className="font-medium" data-testid="text-last-checkin">{formatLastCheckIn(state.lastCheckIn)}</span>
-                  </p>
-                </div>
+                <Button
+                  className="w-full bg-gradient-to-r from-primary to-secondary hover:from-secondary hover:to-primary text-primary-foreground font-bold py-4 px-6 shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 rounded-lg text-lg"
+                  onClick={handleCheckIn}
+                  disabled={state.completedDays >= state.goalDays}
+                  data-testid="button-check-in"
+                >
+                  <CheckCircle className="mr-2 h-5 w-5" />
+                  {state.completedDays >= state.goalDays ? "🎉 Goal Complete!" : "✅ I stayed committed yesterday!"}
+                </Button>
+                
+                <p className="text-sm text-muted-foreground mt-3 text-center">
+                  Last check-in: <span className="font-medium" data-testid="text-last-checkin">{formatLastCheckIn(state.lastCheckIn)}</span>
+                </p>
               </CardContent>
             </Card>
           </div>
 
-          {/* Motivation & Progress Section */}
-          <div className="space-y-8">
+          {/* Right Side Content - 2 Columns */}
+          <div className="lg:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-4">
             {/* Current Achievement */}
-            <Card className={`${getCurrentAchievement().bgColor} border-2 shadow-xl`}>
-              <CardContent className="p-8">
+            <Card className={`${getCurrentAchievement().bgColor} border-2 shadow-lg h-fit`}>
+              <CardContent className="p-6">
                 <div className="text-center">
-                  <div className={`w-20 h-20 bg-gradient-to-r ${getCurrentAchievement().color} rounded-full flex items-center justify-center mx-auto mb-4 shadow-2xl`}>
+                  <div className={`w-16 h-16 bg-gradient-to-r ${getCurrentAchievement().color} rounded-full flex items-center justify-center mx-auto mb-3 shadow-lg`}>
                     {(() => {
                       const IconComponent = getCurrentAchievement().icon;
-                      return <IconComponent className={`text-3xl ${getCurrentAchievement().textColor}`} />;
+                      return <IconComponent className={`text-2xl ${getCurrentAchievement().textColor}`} />;
                     })()}
                   </div>
-                  <h3 className="text-3xl font-bold text-card-foreground mb-2" data-testid="achievement-title">
+                  <h3 className="text-xl font-bold text-card-foreground mb-2" data-testid="achievement-title">
                     {getCurrentAchievement().title}
                   </h3>
-                  <p className="text-lg text-muted-foreground mb-4" data-testid="achievement-description">
+                  <p className="text-sm text-muted-foreground mb-3" data-testid="achievement-description">
                     {getCurrentAchievement().description}
                   </p>
-                  <div className="text-sm text-muted-foreground">
-                    Current Achievement Level • {progressPercentage}% Complete
+                  <div className="text-xs text-muted-foreground">
+                    {progressPercentage}% Complete
                   </div>
                 </div>
               </CardContent>
@@ -518,22 +515,22 @@ export default function Home() {
 
             {/* Next Achievement Preview */}
             {getNextAchievement() && (
-              <Card className="bg-gradient-to-br from-muted/50 to-accent/10 border border-dashed border-muted-foreground/30 shadow-lg">
+              <Card className="bg-gradient-to-br from-muted/50 to-accent/10 border border-dashed border-muted-foreground/30 shadow-lg h-fit">
                 <CardContent className="p-6">
                   <div className="text-center">
-                    <div className="text-lg font-semibold text-muted-foreground mb-3">🎯 Next Achievement</div>
-                    <div className="flex items-center justify-center space-x-4">
-                      <div className={`w-12 h-12 bg-gradient-to-r ${getNextAchievement()!.color} rounded-full flex items-center justify-center shadow-lg opacity-75`}>
+                    <div className="text-sm font-semibold text-muted-foreground mb-3">🎯 Next Achievement</div>
+                    <div className="flex items-center justify-center space-x-3">
+                      <div className={`w-10 h-10 bg-gradient-to-r ${getNextAchievement()!.color} rounded-full flex items-center justify-center shadow-lg opacity-75`}>
                         {(() => {
                           const IconComponent = getNextAchievement()!.icon;
-                          return <IconComponent className={`text-xl ${getNextAchievement()!.textColor}`} />;
+                          return <IconComponent className={`text-lg ${getNextAchievement()!.textColor}`} />;
                         })()}
                       </div>
                       <div className="text-left">
-                        <h4 className="text-xl font-bold text-card-foreground" data-testid="next-achievement-title">
+                        <h4 className="text-lg font-bold text-card-foreground" data-testid="next-achievement-title">
                           {getNextAchievement()!.title}
                         </h4>
-                        <p className="text-sm text-muted-foreground" data-testid="next-achievement-description">
+                        <p className="text-xs text-muted-foreground" data-testid="next-achievement-description">
                           Unlock at {getNextAchievement()!.minPercent}% completion
                         </p>
                       </div>
@@ -544,12 +541,12 @@ export default function Home() {
             )}
 
             {/* Motivational Quote */}
-            <Card className="bg-gradient-to-br from-accent/10 to-warning/10 border border-accent/20 shadow-xl">
-              <CardContent className="p-8">
+            <Card className="bg-gradient-to-br from-accent/10 to-warning/10 border border-accent/20 shadow-lg h-fit">
+              <CardContent className="p-6">
                 <div className="text-center">
-                  <div className="text-4xl mb-4">💪</div>
-                  <h3 className="text-2xl font-bold text-card-foreground mb-4">Daily Motivation</h3>
-                  <blockquote className="text-xl italic text-muted-foreground leading-relaxed">
+                  <div className="text-2xl mb-3">💪</div>
+                  <h3 className="text-lg font-bold text-card-foreground mb-3">Daily Motivation</h3>
+                  <blockquote className="text-sm italic text-muted-foreground leading-relaxed">
                     {progressPercentage === 0 && "Every journey begins with a single step. You've got this!"}
                     {progressPercentage > 0 && progressPercentage < 25 && "Discipline is choosing between what you want now and what you want most."}
                     {progressPercentage >= 25 && progressPercentage < 50 && "You're building incredible mental strength. Keep going!"}
@@ -561,60 +558,57 @@ export default function Home() {
               </CardContent>
             </Card>
 
-            {/* Milestone Achievement */}
-            {getMilestoneMessage() && (
-              <Card className="bg-gradient-to-r from-success to-secondary shadow-xl" data-testid="milestone-message">
-                <CardContent className="p-8 text-success-foreground text-center">
-                  <div className="flex items-center justify-center mb-4">
-                    <Trophy className="text-4xl mr-3" />
-                    <span className="font-bold text-3xl">
-                      {state.completedDays === 7 && "Week 1 Complete!"}
-                      {state.completedDays === 14 && "Two Weeks Strong!"}
-                      {state.completedDays === 21 && "21 Days Achieved!"}
-                      {state.completedDays === 30 && "One Month Complete!"}
-                      {state.completedDays === 60 && "Two Months Strong!"}
-                      {state.completedDays === 90 && "90 Days Mastered!"}
-                    </span>
-                  </div>
-                  <p className="text-lg opacity-95">{getMilestoneMessage()?.message}</p>
-                </CardContent>
-              </Card>
-            )}
-
             {/* Progress History */}
-            <Card className="bg-card shadow-xl">
-              <CardContent className="p-8">
-                <h3 className="text-2xl font-bold text-card-foreground mb-6 text-center">This Week's Progress</h3>
-                <div className="flex justify-center space-x-3" data-testid="week-progress">
+            <Card className="bg-card shadow-lg h-fit">
+              <CardContent className="p-6">
+                <h3 className="text-lg font-bold text-card-foreground mb-4 text-center">This Week's Progress</h3>
+                <div className="flex justify-center space-x-2 mb-4" data-testid="week-progress">
                   {renderWeekProgress()}
                 </div>
-                <div className="mt-6 text-center">
-                  <p className="text-base text-muted-foreground">
+                <div className="text-center">
+                  <p className="text-xs text-muted-foreground">
                     Goal started on <span className="font-semibold text-card-foreground" data-testid="text-start-date">{formatDate(state.startDate)}</span>
                   </p>
                 </div>
               </CardContent>
             </Card>
-
-            {/* Action Button */}
-            <div className="text-center">
-              <Button
-                variant="secondary"
-                className="bg-muted hover:bg-accent text-muted-foreground hover:text-accent-foreground font-semibold py-4 px-8 rounded-xl text-lg"
-                onClick={handleReset}
-                data-testid="button-reset"
-              >
-                <RefreshCw className="mr-3 h-5 w-5" />
-                Start New Goal
-              </Button>
-            </div>
           </div>
         </div>
 
-        {/* Footer */}
-        <div className="mt-16 text-center">
-          <p className="text-lg text-muted-foreground">
-            <Heart className="inline mr-2 h-6 w-6 text-red-400" />
+        {/* Milestone Achievement - Full Width */}
+        {getMilestoneMessage() && (
+          <Card className="bg-gradient-to-r from-success to-secondary shadow-lg mt-6" data-testid="milestone-message">
+            <CardContent className="p-6 text-success-foreground text-center">
+              <div className="flex items-center justify-center mb-3">
+                <Trophy className="text-3xl mr-3" />
+                <span className="font-bold text-2xl">
+                  {state.completedDays === 7 && "Week 1 Complete!"}
+                  {state.completedDays === 14 && "Two Weeks Strong!"}
+                  {state.completedDays === 21 && "21 Days Achieved!"}
+                  {state.completedDays === 30 && "One Month Complete!"}
+                  {state.completedDays === 60 && "Two Months Strong!"}
+                  {state.completedDays === 90 && "90 Days Mastered!"}
+                </span>
+              </div>
+              <p className="text-base opacity-95">{getMilestoneMessage()?.message}</p>
+            </CardContent>
+          </Card>
+        )}
+
+        {/* Footer with Action Button */}
+        <div className="mt-6 flex flex-col items-center space-y-4">
+          <Button
+            variant="secondary"
+            className="bg-muted hover:bg-accent text-muted-foreground hover:text-accent-foreground font-semibold py-3 px-6 rounded-lg text-base"
+            onClick={handleReset}
+            data-testid="button-reset"
+          >
+            <RefreshCw className="mr-2 h-4 w-4" />
+            Start New Goal
+          </Button>
+          
+          <p className="text-sm text-muted-foreground">
+            <Heart className="inline mr-1 h-4 w-4 text-red-400" />
             Built with discipline in mind
           </p>
         </div>
