@@ -411,7 +411,7 @@ export default function Home() {
 
   if (state.mode === 'setup') {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center p-4 bg-gradient-to-br from-primary/5 via-background to-accent/5">
+      <div className="min-h-screen flex flex-col items-center justify-center p-4 bg-gradient-to-br from-primary/5 via-background to-accent/5 dark:from-primary/10 dark:via-gray-900 dark:to-accent/10">
 
         {/* Setup Card */}
         <div className="w-full max-w-lg mx-auto">
@@ -505,7 +505,7 @@ export default function Home() {
 
   // Tracking State - Optimized compact layout
   return (
-    <div className="min-h-screen bg-gradient-to-br from-primary/5 via-background to-accent/5 p-3">
+    <div className="min-h-screen bg-gradient-to-br from-primary/5 via-background to-accent/5 dark:from-primary/10 dark:via-gray-900 dark:to-accent/10 p-3">
       <div className="max-w-7xl mx-auto py-4">
         {/* Header with Settings */}
         <div className="flex justify-between items-center mb-6">
