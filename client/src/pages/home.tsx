@@ -559,7 +559,10 @@ export default function Home() {
         <div className="flex justify-between items-center mb-6">
           <div className="flex items-center space-x-3">
             <Target className="h-8 w-8 text-primary" />
-            <h1 className="text-2xl font-bold text-card-foreground">Goal Tracker</h1>
+            <div>
+              <h1 className="text-2xl font-bold text-card-foreground">{state.goalName || 'Goal Tracker'}</h1>
+              {state.goalName && <p className="text-sm text-muted-foreground">Challenge Dashboard</p>}
+            </div>
           </div>
           
           <Dialog open={isSettingsOpen} onOpenChange={setIsSettingsOpen}>
