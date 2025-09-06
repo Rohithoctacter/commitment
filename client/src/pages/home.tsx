@@ -299,12 +299,6 @@ export default function Home() {
   if (state.mode === 'setup') {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center p-4 bg-gradient-to-br from-primary/5 via-background to-accent/5">
-        {/* Header */}
-        <div className="text-center mb-8 slide-up">
-          <div className="w-20 h-20 bg-gradient-to-br from-primary to-secondary rounded-full flex items-center justify-center mx-auto mb-6 shadow-2xl">
-            <Target className="text-primary-foreground text-3xl" />
-          </div>
-        </div>
 
         {/* Setup Card */}
         <div className="w-full max-w-lg mx-auto">
@@ -400,12 +394,6 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-primary/5 via-background to-accent/5 p-4">
       <div className="max-w-6xl mx-auto pt-8">
-        {/* Header */}
-        <div className="text-center mb-12 slide-up">
-          <div className="w-24 h-24 bg-gradient-to-br from-primary to-secondary rounded-full flex items-center justify-center mx-auto mb-6 shadow-2xl">
-            <Target className="text-primary-foreground text-4xl" />
-          </div>
-        </div>
 
         {/* Main Stats Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
