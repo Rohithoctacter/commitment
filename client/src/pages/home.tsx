@@ -12,6 +12,7 @@ import { Target, Play, CheckCircle, RefreshCw, Trophy, Heart, Lightbulb, Medal, 
 
 interface GoalState {
   mode: 'setup' | 'tracking';
+  goalName: string;
   goalDays: number;
   completedDays: number;
   startDate: string | null;
@@ -21,6 +22,7 @@ interface GoalState {
 interface ChallengeHistory {
   id: string;
   title: string;
+  goalName: string;
   goalDays: number;
   completedDays: number;
   startDate: string;
@@ -65,8 +67,10 @@ const motivationalQuotes = [
 export default function Home() {
   const { toast } = useToast();
   const [goalInput, setGoalInput] = useState<string>("");
+  const [goalNameInput, setGoalNameInput] = useState<string>("");
   const [state, setState] = useState<GoalState>({
     mode: 'setup',
+    goalName: '',
     goalDays: 0,
     completedDays: 0,
     startDate: null,
@@ -132,7 +136,8 @@ export default function Home() {
   const saveChallengeToHistory = (challenge: GoalState) => {
     const historyItem: ChallengeHistory = {
       id: Date.now().toString(),
-      title: `${challenge.goalDays}-Day Challenge`,
+      title: challenge.goalName || `${challenge.goalDays}-Day Challenge`,
+      goalName: challenge.goalName || `${challenge.goalDays}-Day Challenge`,
       goalDays: challenge.goalDays,
       completedDays: challenge.completedDays,
       startDate: challenge.startDate || '',
@@ -154,6 +159,8 @@ export default function Home() {
 
   const handleStartGoal = () => {
     const days = parseInt(goalInput);
+    const goalName = goalNameInput.trim() || `${days}-Day Challenge`;
+    
     if (!days || days < 1 || days > 365) {
       toast({
         title: "Invalid Goal",
@@ -165,6 +172,7 @@ export default function Home() {
 
     setState({
       mode: 'tracking',
+      goalName: goalName,
       goalDays: days,
       completedDays: 0,
       startDate: new Date().toISOString(),
@@ -173,7 +181,7 @@ export default function Home() {
 
     toast({
       title: "Goal Started!",
-      description: `Your ${days}-day commitment journey has begun. Stay strong!`,
+      description: `Your "${goalName}" journey has begun. Stay strong!`,
     });
   };
 
@@ -211,12 +219,14 @@ export default function Home() {
       
       setState({
         mode: 'setup',
+        goalName: '',
         goalDays: 0,
         completedDays: 0,
         startDate: null,
         lastCheckIn: null
       });
       setGoalInput("");
+      setGoalNameInput("");
       
       toast({
         title: "Goal Reset",
@@ -423,6 +433,21 @@ export default function Home() {
               </div>
 
               <div className="space-y-8">
+                <div>
+                  <Label htmlFor="goalName" className="block text-base font-medium text-card-foreground mb-3">
+                    Goal Name
+                  </Label>
+                  <Input
+                    type="text"
+                    id="goalName"
+                    className="w-full p-4 text-lg border-2 focus:ring-4 focus:ring-primary/20"
+                    placeholder="e.g., Daily Exercise, Read Books, Learn Spanish..."
+                    value={goalNameInput}
+                    onChange={(e) => setGoalNameInput(e.target.value)}
+                    data-testid="input-goal-name"
+                  />
+                </div>
+
                 <div>
                   <Label htmlFor="goalDays" className="block text-base font-medium text-card-foreground mb-3">
                     Number of Days
