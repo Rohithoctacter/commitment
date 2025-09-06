@@ -372,7 +372,7 @@ export default function Home() {
                 <div className="grid grid-cols-3 gap-3">
                   <Button
                     variant="secondary"
-                    className="p-4 bg-muted hover:bg-primary hover:text-primary-foreground text-base font-semibold rounded-xl transition-all duration-200 hover:scale-105"
+                    className="p-4 bg-background border-2 border-muted-foreground/20 hover:bg-primary hover:text-primary-foreground hover:border-primary text-base font-semibold rounded-xl transition-all duration-200 hover:scale-105"
                     onClick={() => setQuickGoal(7)}
                     data-testid="button-quick-7"
                   >
@@ -380,7 +380,7 @@ export default function Home() {
                   </Button>
                   <Button
                     variant="secondary"
-                    className="p-4 bg-muted hover:bg-primary hover:text-primary-foreground text-base font-semibold rounded-xl transition-all duration-200 hover:scale-105"
+                    className="p-4 bg-background border-2 border-muted-foreground/20 hover:bg-primary hover:text-primary-foreground hover:border-primary text-base font-semibold rounded-xl transition-all duration-200 hover:scale-105"
                     onClick={() => setQuickGoal(30)}
                     data-testid="button-quick-30"
                   >
@@ -388,7 +388,7 @@ export default function Home() {
                   </Button>
                   <Button
                     variant="secondary"
-                    className="p-4 bg-muted hover:bg-primary hover:text-primary-foreground text-base font-semibold rounded-xl transition-all duration-200 hover:scale-105"
+                    className="p-4 bg-background border-2 border-muted-foreground/20 hover:bg-primary hover:text-primary-foreground hover:border-primary text-base font-semibold rounded-xl transition-all duration-200 hover:scale-105"
                     onClick={() => setQuickGoal(90)}
                     data-testid="button-quick-90"
                   >
