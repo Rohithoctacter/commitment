@@ -15,6 +15,39 @@ interface GoalState {
   lastCheckIn: string | null;
 }
 
+const motivationalQuotes = [
+  "Success doesn't come from what you do occasionally, it comes from what you do consistently.",
+  "Push yourself, because no one else is going to do it for you.",
+  "Hard work beats talent when talent doesn't work hard.",
+  "Dreams don't work unless you do.",
+  "Discipline is the bridge between goals and accomplishment. – Jim Rohn",
+  "The only place where success comes before work is in the dictionary.",
+  "You get what you work for, not what you wish for.",
+  "Wake up with determination. Go to bed with satisfaction.",
+  "Your only limit is the amount of effort you're willing to give.",
+  "Grind in silence. Let success make the noise.",
+  "Set a goal so big you can't achieve it until you grow into the person who can.",
+  "Don't call it a dream. Call it a plan.",
+  "A goal without a plan is just a wish. – Antoine de Saint-Exupéry",
+  "Stay focused. Stay humble. Stay driven.",
+  "If you want something you've never had, you must be willing to do something you've never done.",
+  "Work while they sleep. Learn while they party. Live like they dream.",
+  "Success is what comes after you stop making excuses.",
+  "Your goals don't care how you feel.",
+  "Start where you are. Use what you have. Do what you can. – Arthur Ashe",
+  "A dream written down becomes a goal. A goal broken down becomes a plan. A plan backed by action becomes reality.",
+  "Whether you think you can or you think you can't, you're right. – Henry Ford",
+  "The mind is everything. What you think, you become. – Buddha",
+  "Believe you can and you're halfway there. – Theodore Roosevelt",
+  "The only way to grow is to step out of your comfort zone.",
+  "The biggest wall you have to climb is the one you build in your mind.",
+  "You become what you repeatedly do.",
+  "Your mindset determines your future.",
+  "Be stronger than your strongest excuse.",
+  "Don't limit your challenges. Challenge your limits.",
+  "Growth is painful. Change is painful. But nothing is as painful as staying stuck."
+];
+
 export default function Home() {
   const { toast } = useToast();
   const [goalInput, setGoalInput] = useState<string>("");
@@ -25,6 +58,10 @@ export default function Home() {
     startDate: null,
     lastCheckIn: null
   });
+  
+  const [randomQuote] = useState(() => 
+    motivationalQuotes[Math.floor(Math.random() * motivationalQuotes.length)]
+  );
 
   // Load from localStorage on mount
   useEffect(() => {
@@ -445,7 +482,7 @@ export default function Home() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Progress Circle - Left Column */}
           <div className="lg:col-span-1">
-            <Card className="bg-card rounded-xl shadow-lg border border-border flex flex-col" style={{ height: '400px' }}>
+            <Card className="bg-card rounded-xl shadow-lg border border-border flex flex-col" style={{ height: '280px' }}>
               <CardContent className="p-6 flex-1 flex flex-col justify-center">
                 <div className="relative flex items-center justify-center mb-4">
                   <svg className="w-32 h-32" viewBox="0 0 160 160">
@@ -580,12 +617,7 @@ export default function Home() {
                   <div className="text-2xl mb-4">💪</div>
                   <h3 className="text-lg font-bold text-card-foreground mb-4">Daily Motivation</h3>
                   <blockquote className="text-sm italic text-muted-foreground leading-relaxed">
-                    {progressPercentage === 0 && "Every journey begins with a single step. You've got this!"}
-                    {progressPercentage > 0 && progressPercentage < 25 && "Discipline is choosing between what you want now and what you want most."}
-                    {progressPercentage >= 25 && progressPercentage < 50 && "You're building incredible mental strength. Keep going!"}
-                    {progressPercentage >= 50 && progressPercentage < 75 && "Halfway there! Your willpower is unstoppable."}
-                    {progressPercentage >= 75 && progressPercentage < 100 && "The finish line is in sight. Push through to victory!"}
-                    {progressPercentage === 100 && "Congratulations! You've mastered self-discipline. You're truly inspiring!"}
+                    {randomQuote}
                   </blockquote>
                 </div>
               </CardContent>
