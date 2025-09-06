@@ -515,25 +515,30 @@ export default function Home() {
 
             {/* Next Achievement Preview */}
             {getNextAchievement() && (
-              <Card className="bg-gradient-to-br from-muted/50 to-accent/10 border border-dashed border-muted-foreground/30 shadow-lg h-fit">
-                <CardContent className="p-6">
+              <Card className="bg-gradient-to-br from-muted/50 to-accent/10 border border-dashed border-muted-foreground/30 shadow-lg">
+                <CardContent className="p-6 h-full flex flex-col justify-center">
                   <div className="text-center">
-                    <div className="text-sm font-semibold text-muted-foreground mb-3">🎯 Next Achievement</div>
-                    <div className="flex items-center justify-center space-x-3">
-                      <div className={`w-10 h-10 bg-gradient-to-r ${getNextAchievement()!.color} rounded-full flex items-center justify-center shadow-lg opacity-75`}>
-                        {(() => {
-                          const IconComponent = getNextAchievement()!.icon;
-                          return <IconComponent className={`text-lg ${getNextAchievement()!.textColor}`} />;
-                        })()}
-                      </div>
-                      <div className="text-left">
-                        <h4 className="text-lg font-bold text-card-foreground" data-testid="next-achievement-title">
-                          {getNextAchievement()!.title}
-                        </h4>
-                        <p className="text-xs text-muted-foreground" data-testid="next-achievement-description">
-                          Unlock at {getNextAchievement()!.minPercent}% completion
-                        </p>
-                      </div>
+                    <div className="text-lg font-semibold text-muted-foreground mb-6">🎯 Next Achievement</div>
+                    <div className={`w-16 h-16 bg-gradient-to-r ${getNextAchievement()!.color} rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg opacity-75`}>
+                      {(() => {
+                        const IconComponent = getNextAchievement()!.icon;
+                        return <IconComponent className={`text-2xl ${getNextAchievement()!.textColor}`} />;
+                      })()}
+                    </div>
+                    <h4 className="text-xl font-bold text-card-foreground mb-3" data-testid="next-achievement-title">
+                      {getNextAchievement()!.title}
+                    </h4>
+                    <p className="text-sm text-muted-foreground mb-4" data-testid="next-achievement-description">
+                      Unlock at {getNextAchievement()!.minPercent}% completion
+                    </p>
+                    <div className="w-full bg-muted rounded-full h-2 mt-4">
+                      <div 
+                        className={`bg-gradient-to-r ${getNextAchievement()!.color} h-2 rounded-full transition-all duration-500 opacity-50`}
+                        style={{ width: `${Math.min(100, (progressPercentage / getNextAchievement()!.minPercent) * 100)}%` }}
+                      ></div>
+                    </div>
+                    <div className="text-xs text-muted-foreground mt-2">
+                      {Math.round((progressPercentage / getNextAchievement()!.minPercent) * 100)}% progress to unlock
                     </div>
                   </div>
                 </CardContent>
