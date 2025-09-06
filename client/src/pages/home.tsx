@@ -4,8 +4,11 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Progress } from "@/components/ui/progress";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Switch } from "@/components/ui/switch";
+import { Separator } from "@/components/ui/separator";
 import { useToast } from "@/hooks/use-toast";
-import { Target, Play, CheckCircle, RefreshCw, Trophy, Heart, Lightbulb, Medal, Crown, Star } from "lucide-react";
+import { Target, Play, CheckCircle, RefreshCw, Trophy, Heart, Lightbulb, Medal, Crown, Star, Settings, Moon, Sun, Calendar, RotateCcw } from "lucide-react";
 
 interface GoalState {
   mode: 'setup' | 'tracking';
@@ -13,6 +16,17 @@ interface GoalState {
   completedDays: number;
   startDate: string | null;
   lastCheckIn: string | null;
+}
+
+interface ChallengeHistory {
+  id: string;
+  title: string;
+  goalDays: number;
+  completedDays: number;
+  startDate: string;
+  endDate: string | null;
+  completed: boolean;
+  percentage: number;
 }
 
 const motivationalQuotes = [
@@ -63,6 +77,19 @@ export default function Home() {
     motivationalQuotes[Math.floor(Math.random() * motivationalQuotes.length)]
   );
 
+  // Theme and settings state
+  const [isDarkMode, setIsDarkMode] = useState<boolean>(() => {
+    const saved = localStorage.getItem('theme');
+    return saved === 'dark' || (!saved && window.matchMedia('(prefers-color-scheme: dark)').matches);
+  });
+  
+  const [challengesHistory, setChallengesHistory] = useState<ChallengeHistory[]>(() => {
+    const saved = localStorage.getItem('challengesHistory');
+    return saved ? JSON.parse(saved) : [];
+  });
+
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+
   // Load from localStorage on mount
   useEffect(() => {
     const saved = localStorage.getItem('commitmentTracker');
@@ -80,6 +107,50 @@ export default function Home() {
   useEffect(() => {
     localStorage.setItem('commitmentTracker', JSON.stringify(state));
   }, [state]);
+
+  // Theme effect
+  useEffect(() => {
+    const root = document.documentElement;
+    if (isDarkMode) {
+      root.classList.add('dark');
+      localStorage.setItem('theme', 'dark');
+    } else {
+      root.classList.remove('dark');
+      localStorage.setItem('theme', 'light');
+    }
+  }, [isDarkMode]);
+
+  // Save challenges history
+  useEffect(() => {
+    localStorage.setItem('challengesHistory', JSON.stringify(challengesHistory));
+  }, [challengesHistory]);
+
+  const toggleTheme = () => {
+    setIsDarkMode(!isDarkMode);
+  };
+
+  const saveChallengeToHistory = (challenge: GoalState) => {
+    const historyItem: ChallengeHistory = {
+      id: Date.now().toString(),
+      title: `${challenge.goalDays}-Day Challenge`,
+      goalDays: challenge.goalDays,
+      completedDays: challenge.completedDays,
+      startDate: challenge.startDate || '',
+      endDate: new Date().toISOString(),
+      completed: challenge.completedDays >= challenge.goalDays,
+      percentage: Math.round((challenge.completedDays / challenge.goalDays) * 100)
+    };
+    
+    setChallengesHistory(prev => [historyItem, ...prev].slice(0, 50)); // Keep only latest 50
+  };
+
+  const clearChallengesHistory = () => {
+    setChallengesHistory([]);
+    toast({
+      title: "History Cleared",
+      description: "Your challenges history has been cleared.",
+    });
+  };
 
   const handleStartGoal = () => {
     const days = parseInt(goalInput);
@@ -133,6 +204,11 @@ export default function Home() {
 
   const handleReset = () => {
     if (confirm("Are you sure you want to start a new goal? This will reset your current progress.")) {
+      // Save current challenge to history before resetting
+      if (state.goalDays > 0) {
+        saveChallengeToHistory(state);
+      }
+      
       setState({
         mode: 'setup',
         goalDays: 0,
@@ -431,6 +507,111 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-primary/5 via-background to-accent/5 p-3">
       <div className="max-w-7xl mx-auto py-4">
+        {/* Header with Settings */}
+        <div className="flex justify-between items-center mb-6">
+          <div className="flex items-center space-x-3">
+            <Target className="h-8 w-8 text-primary" />
+            <h1 className="text-2xl font-bold text-card-foreground">Goal Tracker</h1>
+          </div>
+          
+          <Dialog open={isSettingsOpen} onOpenChange={setIsSettingsOpen}>
+            <DialogTrigger asChild>
+              <Button
+                variant="outline"
+                size="icon"
+                className="h-10 w-10 rounded-full border-2 hover:bg-primary hover:text-primary-foreground hover:border-primary transition-all duration-200"
+                data-testid="button-settings"
+              >
+                <Settings className="h-5 w-5" />
+              </Button>
+            </DialogTrigger>
+            
+            <DialogContent className="sm:max-w-md">
+              <DialogHeader>
+                <DialogTitle className="flex items-center space-x-2">
+                  <Settings className="h-5 w-5" />
+                  <span>Settings</span>
+                </DialogTitle>
+              </DialogHeader>
+              
+              <div className="space-y-6">
+                {/* Theme Toggle */}
+                <div className="space-y-3">
+                  <h3 className="text-sm font-medium">Appearance</h3>
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center space-x-2">
+                      {isDarkMode ? <Moon className="h-4 w-4" /> : <Sun className="h-4 w-4" />}
+                      <span className="text-sm">Dark Mode</span>
+                    </div>
+                    <Switch
+                      checked={isDarkMode}
+                      onCheckedChange={toggleTheme}
+                      data-testid="switch-theme"
+                    />
+                  </div>
+                </div>
+
+                <Separator />
+
+                {/* Challenges History */}
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between">
+                    <h3 className="text-sm font-medium flex items-center space-x-2">
+                      <Calendar className="h-4 w-4" />
+                      <span>Challenges History</span>
+                    </h3>
+                    {challengesHistory.length > 0 && (
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={clearChallengesHistory}
+                        className="text-xs"
+                        data-testid="button-clear-history"
+                      >
+                        <RotateCcw className="h-3 w-3 mr-1" />
+                        Clear
+                      </Button>
+                    )}
+                  </div>
+
+                  <div className="max-h-60 overflow-y-auto space-y-2">
+                    {challengesHistory.length === 0 ? (
+                      <p className="text-sm text-muted-foreground text-center py-4">
+                        No challenges completed yet
+                      </p>
+                    ) : (
+                      challengesHistory.map((challenge) => (
+                        <div
+                          key={challenge.id}
+                          className="p-3 bg-muted/50 rounded-lg border"
+                          data-testid={`history-item-${challenge.id}`}
+                        >
+                          <div className="flex items-center justify-between mb-1">
+                            <span className="font-medium text-sm">{challenge.title}</span>
+                            <span className={`text-xs px-2 py-1 rounded-full ${
+                              challenge.completed 
+                                ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200' 
+                                : 'bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-200'
+                            }`}>
+                              {challenge.percentage}%
+                            </span>
+                          </div>
+                          <div className="text-xs text-muted-foreground">
+                            {challenge.completedDays}/{challenge.goalDays} days completed
+                          </div>
+                          <div className="text-xs text-muted-foreground">
+                            {new Date(challenge.startDate).toLocaleDateString()} - {new Date(challenge.endDate || '').toLocaleDateString()}
+                          </div>
+                        </div>
+                      ))
+                    )}
+                  </div>
+                </div>
+              </div>
+            </DialogContent>
+          </Dialog>
+        </div>
+        
         {/* Main Stats Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
           {/* Days Set */}
