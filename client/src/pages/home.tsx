@@ -151,9 +151,13 @@ export default function Home() {
 
   const clearChallengesHistory = () => {
     setChallengesHistory([]);
+    // Explicitly clear from localStorage to ensure it's deleted
+    localStorage.removeItem('challengesHistory');
+    localStorage.setItem('challengesHistory', JSON.stringify([]));
+    
     toast({
       title: "History Cleared",
-      description: "Your challenges history has been cleared.",
+      description: "Your challenges history has been permanently deleted.",
     });
   };
 
