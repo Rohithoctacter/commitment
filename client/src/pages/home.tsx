@@ -432,8 +432,36 @@ export default function Home() {
           {/* Percentage Done */}
           <Card className="bg-gradient-to-br from-purple-50 to-purple-100 dark:from-purple-950 dark:to-purple-900 border-purple-200 dark:border-purple-800 shadow-lg">
             <CardContent className="p-4 text-center">
-              <div className="text-3xl font-bold text-purple-600 dark:text-purple-400 mb-2" data-testid="text-progress-percentage">
-                {progressPercentage}%
+              <div className="relative flex items-center justify-center mb-3">
+                <svg className="progress-circle w-20 h-20" viewBox="0 0 160 160">
+                  <circle 
+                    className="stroke-purple-200 dark:stroke-purple-800" 
+                    cx="80" 
+                    cy="80" 
+                    r="60" 
+                    strokeWidth="8" 
+                    fill="none"
+                  ></circle>
+                  <circle
+                    className="stroke-purple-600 dark:stroke-purple-400"
+                    cx="80"
+                    cy="80"
+                    r="60"
+                    strokeWidth="8"
+                    fill="none"
+                    strokeLinecap="round"
+                    strokeDasharray={2 * Math.PI * 60}
+                    strokeDashoffset={2 * Math.PI * 60 - (progressPercentage / 100) * 2 * Math.PI * 60}
+                    transform="rotate(-90 80 80)"
+                    style={{ transition: 'stroke-dashoffset 0.5s ease-in-out' }}
+                  ></circle>
+                </svg>
+                
+                <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
+                  <div className="text-2xl font-bold text-purple-600 dark:text-purple-400" data-testid="text-progress-percentage">
+                    {progressPercentage}%
+                  </div>
+                </div>
               </div>
               <div className="text-sm font-semibold text-purple-700 dark:text-purple-300">Completed</div>
               <div className="text-xs text-purple-600 dark:text-purple-400 mt-1">Of your goal achieved</div>
