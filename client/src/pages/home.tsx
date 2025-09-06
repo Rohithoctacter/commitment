@@ -445,7 +445,7 @@ export default function Home() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Progress Circle - Left Column */}
           <div className="lg:col-span-1">
-            <Card className="bg-card rounded-xl shadow-lg border border-border flex flex-col">
+            <Card className="bg-card rounded-xl shadow-lg border border-border flex flex-col" style={{ height: '411px' }}>
               <CardContent className="p-6 flex-1 flex flex-col justify-center">
                 <div className="relative flex items-center justify-center mb-4">
                   <svg className="w-32 h-32" viewBox="0 0 160 160">
