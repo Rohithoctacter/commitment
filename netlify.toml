@@ -5,14 +5,8 @@
 [build.environment]
   NODE_VERSION = "20"
 
+# Handle client-side routing - redirect all routes to index.html for SPA
 [[redirects]]
-  from = "/api/*"
-  to = "/.netlify/functions/api/:splat"
+  from = "/*"
+  to = "/index.html"
   status = 200
-
-[functions]
-  directory = "netlify/functions"
-  
-[dev]
-  command = "npm run dev"
-  port = 5000
