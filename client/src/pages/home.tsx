@@ -518,6 +518,22 @@ export default function Home() {
                   <p className="text-sm text-muted-foreground mb-4" data-testid="achievement-description">
                     {getCurrentAchievement().description}
                   </p>
+                  
+                  {/* Linear Progress Bar */}
+                  <div className="w-full mb-3">
+                    <div className="w-full bg-white/30 dark:bg-black/30 rounded-full h-2">
+                      <div 
+                        className={`bg-gradient-to-r ${getCurrentAchievement().color} h-2 rounded-full transition-all duration-500`}
+                        style={{ 
+                          width: `${Math.min(100, Math.max(0, 
+                            (progressPercentage - getCurrentAchievement().minPercent) / 
+                            (getCurrentAchievement().maxPercent - getCurrentAchievement().minPercent) * 100
+                          ))}%` 
+                        }}
+                      ></div>
+                    </div>
+                  </div>
+                  
                   <div className="text-xs text-muted-foreground">
                     {progressPercentage}% Complete
                   </div>
