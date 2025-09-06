@@ -208,35 +208,35 @@ export default function Home() {
 
   if (state.mode === 'setup') {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center p-4">
+      <div className="min-h-screen flex flex-col items-center justify-center p-4 bg-gradient-to-br from-primary/5 via-background to-accent/5">
         {/* Header */}
         <div className="text-center mb-8 slide-up">
-          <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
-            <Target className="text-primary-foreground text-2xl" />
+          <div className="w-20 h-20 bg-gradient-to-br from-primary to-secondary rounded-full flex items-center justify-center mx-auto mb-6 shadow-2xl">
+            <Target className="text-primary-foreground text-3xl" />
           </div>
-          <h1 className="text-3xl font-bold text-card-foreground mb-2">Commitment Tracker</h1>
-          <p className="text-muted-foreground text-lg">Build discipline, one day at a time</p>
+          <h1 className="text-4xl font-bold text-card-foreground mb-3">Commitment Tracker</h1>
+          <p className="text-muted-foreground text-xl">Build discipline, one day at a time</p>
         </div>
 
         {/* Setup Card */}
-        <div className="w-full max-w-md mx-auto">
-          <Card className="bg-card rounded-xl shadow-xl border border-border fade-in">
-            <CardContent className="p-8">
-              <div className="text-center mb-6">
-                <h2 className="text-2xl font-semibold text-card-foreground mb-3">Set Your Goal</h2>
-                <p className="text-muted-foreground">Choose how many days you want to commit to your journey</p>
+        <div className="w-full max-w-lg mx-auto">
+          <Card className="bg-card rounded-2xl shadow-2xl border border-border fade-in backdrop-blur-sm">
+            <CardContent className="p-10">
+              <div className="text-center mb-8">
+                <h2 className="text-3xl font-semibold text-card-foreground mb-4">Set Your Goal</h2>
+                <p className="text-muted-foreground text-lg">Choose how many days you want to commit to your journey</p>
               </div>
 
-              <div className="space-y-6">
+              <div className="space-y-8">
                 <div>
-                  <Label htmlFor="goalDays" className="block text-sm font-medium text-card-foreground mb-2">
+                  <Label htmlFor="goalDays" className="block text-base font-medium text-card-foreground mb-3">
                     Number of Days
                   </Label>
                   <div className="relative">
                     <Input
                       type="number"
                       id="goalDays"
-                      className="w-full p-4 text-center text-2xl font-semibold"
+                      className="w-full p-6 text-center text-3xl font-bold border-2 focus:ring-4 focus:ring-primary/20"
                       placeholder="30"
                       min="1"
                       max="365"
@@ -244,16 +244,16 @@ export default function Home() {
                       onChange={(e) => setGoalInput(e.target.value)}
                       data-testid="input-goal-days"
                     />
-                    <div className="absolute right-3 top-1/2 transform -translate-y-1/2 text-muted-foreground">
+                    <div className="absolute right-4 top-1/2 transform -translate-y-1/2 text-muted-foreground text-lg font-medium">
                       days
                     </div>
                   </div>
                 </div>
 
-                <div className="grid grid-cols-3 gap-2">
+                <div className="grid grid-cols-3 gap-3">
                   <Button
                     variant="secondary"
-                    className="p-3 bg-muted hover:bg-primary hover:text-primary-foreground text-sm font-medium"
+                    className="p-4 bg-muted hover:bg-primary hover:text-primary-foreground text-base font-semibold rounded-xl transition-all duration-200 hover:scale-105"
                     onClick={() => setQuickGoal(7)}
                     data-testid="button-quick-7"
                   >
@@ -261,7 +261,7 @@ export default function Home() {
                   </Button>
                   <Button
                     variant="secondary"
-                    className="p-3 bg-muted hover:bg-primary hover:text-primary-foreground text-sm font-medium"
+                    className="p-4 bg-muted hover:bg-primary hover:text-primary-foreground text-base font-semibold rounded-xl transition-all duration-200 hover:scale-105"
                     onClick={() => setQuickGoal(30)}
                     data-testid="button-quick-30"
                   >
@@ -269,7 +269,7 @@ export default function Home() {
                   </Button>
                   <Button
                     variant="secondary"
-                    className="p-3 bg-muted hover:bg-primary hover:text-primary-foreground text-sm font-medium"
+                    className="p-4 bg-muted hover:bg-primary hover:text-primary-foreground text-base font-semibold rounded-xl transition-all duration-200 hover:scale-105"
                     onClick={() => setQuickGoal(90)}
                     data-testid="button-quick-90"
                   >
@@ -278,18 +278,18 @@ export default function Home() {
                 </div>
 
                 <Button
-                  className="w-full bg-primary hover:bg-secondary text-primary-foreground font-semibold py-4 px-6 shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200"
+                  className="w-full bg-gradient-to-r from-primary to-secondary hover:from-secondary hover:to-primary text-primary-foreground font-bold py-6 px-8 shadow-2xl hover:shadow-3xl transform hover:scale-105 transition-all duration-300 rounded-xl text-lg"
                   onClick={handleStartGoal}
                   data-testid="button-start-journey"
                 >
-                  <Play className="mr-2 h-4 w-4" />
+                  <Play className="mr-3 h-5 w-5" />
                   Start My Journey
                 </Button>
               </div>
 
-              <div className="mt-6 p-4 bg-muted rounded-lg">
-                <p className="text-sm text-muted-foreground text-center">
-                  <Lightbulb className="inline mr-1 h-4 w-4 text-warning" />
+              <div className="mt-8 p-6 bg-gradient-to-r from-accent/10 to-warning/10 rounded-xl border border-accent/20">
+                <p className="text-base text-muted-foreground text-center">
+                  <Lightbulb className="inline mr-2 h-5 w-5 text-warning" />
                   Tip: Start with a realistic goal. You can always set a new challenge later!
                 </p>
               </div>
@@ -298,9 +298,9 @@ export default function Home() {
         </div>
 
         {/* Footer */}
-        <div className="mt-12 text-center">
-          <p className="text-sm text-muted-foreground">
-            <Heart className="inline mr-1 h-4 w-4 text-red-400" />
+        <div className="mt-16 text-center">
+          <p className="text-base text-muted-foreground">
+            <Heart className="inline mr-2 h-5 w-5 text-red-400" />
             Built with discipline in mind
           </p>
         </div>
@@ -308,142 +308,192 @@ export default function Home() {
     );
   }
 
-  // Tracking State
+  // Tracking State - Clean professional interface
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center p-4">
-      {/* Header */}
-      <div className="text-center mb-8 slide-up">
-        <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
-          <Target className="text-primary-foreground text-2xl" />
+    <div className="min-h-screen bg-gradient-to-br from-primary/5 via-background to-accent/5 p-4">
+      <div className="max-w-6xl mx-auto pt-8">
+        {/* Header */}
+        <div className="text-center mb-12 slide-up">
+          <div className="w-24 h-24 bg-gradient-to-br from-primary to-secondary rounded-full flex items-center justify-center mx-auto mb-6 shadow-2xl">
+            <Target className="text-primary-foreground text-4xl" />
+          </div>
+          <h1 className="text-5xl font-bold text-card-foreground mb-4">Commitment Tracker</h1>
+          <p className="text-muted-foreground text-2xl">Your journey to discipline and success</p>
         </div>
-        <h1 className="text-3xl font-bold text-card-foreground mb-2">Commitment Tracker</h1>
-        <p className="text-muted-foreground text-lg">Build discipline, one day at a time</p>
-      </div>
 
-      {/* Tracking Card */}
-      <div className="w-full max-w-md mx-auto">
-        <Card className="bg-card rounded-xl shadow-xl border border-border">
-          <CardContent className="p-8">
-            {/* Progress Circle */}
-            <div className="relative flex items-center justify-center mb-8">
-              <svg className="progress-circle w-48 h-48" viewBox="0 0 160 160">
-                <circle className="progress-circle-bg" cx="80" cy="80" r="72"></circle>
-                <circle
-                  className="progress-circle-fill"
-                  cx="80"
-                  cy="80"
-                  r="72"
-                  strokeDasharray={circumference}
-                  strokeDashoffset={strokeDashoffset}
-                ></circle>
-              </svg>
-              
-              <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
-                <div className="text-4xl font-bold text-primary" data-testid="text-completed-days">
-                  {state.completedDays}
-                </div>
-                <div className="text-sm text-muted-foreground">days completed</div>
-                <div className="text-2xl font-semibold text-card-foreground mt-1" data-testid="text-progress-percentage">
-                  {progressPercentage}%
-                </div>
+        {/* Main Stats Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+          {/* Days Set */}
+          <Card className="bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-950 dark:to-blue-900 border-blue-200 dark:border-blue-800 shadow-xl">
+            <CardContent className="p-8 text-center">
+              <div className="text-5xl font-bold text-blue-600 dark:text-blue-400 mb-3" data-testid="text-total-days">
+                {state.goalDays}
               </div>
-            </div>
+              <div className="text-lg font-semibold text-blue-700 dark:text-blue-300">Days Set</div>
+              <div className="text-sm text-blue-600 dark:text-blue-400 mt-2">Your commitment period</div>
+            </CardContent>
+          </Card>
 
-            {/* Stats Grid */}
-            <div className="grid grid-cols-3 gap-4 mb-8">
-              <div className="text-center p-4 bg-muted rounded-lg">
-                <div className="text-2xl font-bold text-card-foreground" data-testid="text-total-days">
-                  {state.goalDays}
-                </div>
-                <div className="text-xs text-muted-foreground font-medium">Total Days</div>
+          {/* Days Done */}
+          <Card className="bg-gradient-to-br from-green-50 to-green-100 dark:from-green-950 dark:to-green-900 border-green-200 dark:border-green-800 shadow-xl">
+            <CardContent className="p-8 text-center">
+              <div className="text-5xl font-bold text-green-600 dark:text-green-400 mb-3" data-testid="text-completed-days">
+                {state.completedDays}
               </div>
-              <div className="text-center p-4 bg-success rounded-lg text-success-foreground">
-                <div className="text-2xl font-bold" data-testid="text-completed-stat">
-                  {state.completedDays}
-                </div>
-                <div className="text-xs font-medium opacity-90">Completed</div>
-              </div>
-              <div className="text-center p-4 bg-muted rounded-lg">
-                <div className="text-2xl font-bold text-card-foreground" data-testid="text-remaining-days">
-                  {remainingDays}
-                </div>
-                <div className="text-xs text-muted-foreground font-medium">Remaining</div>
-              </div>
-            </div>
+              <div className="text-lg font-semibold text-green-700 dark:text-green-300">Days Done</div>
+              <div className="text-sm text-green-600 dark:text-green-400 mt-2">Successfully completed</div>
+            </CardContent>
+          </Card>
 
-            {/* Check-in Button */}
-            <div className="space-y-4 mb-6">
-              <Button
-                className="w-full bg-primary hover:bg-secondary text-primary-foreground font-semibold py-4 px-6 shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200 celebration-animation"
-                onClick={handleCheckIn}
-                disabled={state.completedDays >= state.goalDays}
-                data-testid="button-check-in"
-              >
-                <CheckCircle className="mr-2 h-4 w-4" />
-                {state.completedDays >= state.goalDays ? "Goal Complete!" : "I stayed committed yesterday!"}
-              </Button>
-              
-              <div className="text-center">
-                <p className="text-sm text-muted-foreground">
-                  Last check-in: <span className="font-medium" data-testid="text-last-checkin">{formatLastCheckIn(state.lastCheckIn)}</span>
-                </p>
+          {/* Days Left */}
+          <Card className="bg-gradient-to-br from-orange-50 to-orange-100 dark:from-orange-950 dark:to-orange-900 border-orange-200 dark:border-orange-800 shadow-xl">
+            <CardContent className="p-8 text-center">
+              <div className="text-5xl font-bold text-orange-600 dark:text-orange-400 mb-3" data-testid="text-remaining-days">
+                {remainingDays}
               </div>
-            </div>
+              <div className="text-lg font-semibold text-orange-700 dark:text-orange-300">Days Left</div>
+              <div className="text-sm text-orange-600 dark:text-orange-400 mt-2">Keep pushing forward</div>
+            </CardContent>
+          </Card>
 
-            {/* Milestone Message */}
+          {/* Percentage Done */}
+          <Card className="bg-gradient-to-br from-purple-50 to-purple-100 dark:from-purple-950 dark:to-purple-900 border-purple-200 dark:border-purple-800 shadow-xl">
+            <CardContent className="p-8 text-center">
+              <div className="text-5xl font-bold text-purple-600 dark:text-purple-400 mb-3" data-testid="text-progress-percentage">
+                {progressPercentage}%
+              </div>
+              <div className="text-lg font-semibold text-purple-700 dark:text-purple-300">Completed</div>
+              <div className="text-sm text-purple-600 dark:text-purple-400 mt-2">Of your goal achieved</div>
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* Main Content Row */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+          {/* Progress Circle */}
+          <div className="flex flex-col items-center">
+            <Card className="bg-card rounded-2xl shadow-2xl border border-border w-full max-w-md">
+              <CardContent className="p-10">
+                <div className="relative flex items-center justify-center mb-8">
+                  <svg className="progress-circle w-64 h-64" viewBox="0 0 160 160">
+                    <circle className="progress-circle-bg" cx="80" cy="80" r="72"></circle>
+                    <circle
+                      className="progress-circle-fill"
+                      cx="80"
+                      cy="80"
+                      r="72"
+                      strokeDasharray={circumference}
+                      strokeDashoffset={strokeDashoffset}
+                    ></circle>
+                  </svg>
+                  
+                  <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
+                    <div className="text-6xl font-bold text-primary mb-2">
+                      {state.completedDays}
+                    </div>
+                    <div className="text-lg text-muted-foreground mb-3">days completed</div>
+                    <div className="text-4xl font-semibold text-card-foreground">
+                      {progressPercentage}%
+                    </div>
+                  </div>
+                </div>
+
+                <div className="text-center">
+                  <Button
+                    className="w-full bg-gradient-to-r from-primary to-secondary hover:from-secondary hover:to-primary text-primary-foreground font-bold py-6 px-8 shadow-2xl hover:shadow-3xl transform hover:scale-105 transition-all duration-300 rounded-xl text-xl"
+                    onClick={handleCheckIn}
+                    disabled={state.completedDays >= state.goalDays}
+                    data-testid="button-check-in"
+                  >
+                    <CheckCircle className="mr-3 h-6 w-6" />
+                    {state.completedDays >= state.goalDays ? "🎉 Goal Complete!" : "✅ I stayed committed yesterday!"}
+                  </Button>
+                  
+                  <p className="text-base text-muted-foreground mt-4">
+                    Last check-in: <span className="font-medium" data-testid="text-last-checkin">{formatLastCheckIn(state.lastCheckIn)}</span>
+                  </p>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Motivation & Progress Section */}
+          <div className="space-y-8">
+            {/* Motivational Quote */}
+            <Card className="bg-gradient-to-br from-accent/10 to-warning/10 border border-accent/20 shadow-xl">
+              <CardContent className="p-8">
+                <div className="text-center">
+                  <div className="text-4xl mb-4">💪</div>
+                  <h3 className="text-2xl font-bold text-card-foreground mb-4">Daily Motivation</h3>
+                  <blockquote className="text-xl italic text-muted-foreground leading-relaxed">
+                    {progressPercentage === 0 && "Every journey begins with a single step. You've got this!"}
+                    {progressPercentage > 0 && progressPercentage < 25 && "Discipline is choosing between what you want now and what you want most."}
+                    {progressPercentage >= 25 && progressPercentage < 50 && "You're building incredible mental strength. Keep going!"}
+                    {progressPercentage >= 50 && progressPercentage < 75 && "Halfway there! Your willpower is unstoppable."}
+                    {progressPercentage >= 75 && progressPercentage < 100 && "The finish line is in sight. Push through to victory!"}
+                    {progressPercentage === 100 && "Congratulations! You've mastered self-discipline. You're truly inspiring!"}
+                  </blockquote>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Milestone Achievement */}
             {getMilestoneMessage() && (
-              <div className="bg-gradient-to-r from-success to-secondary p-4 rounded-lg text-success-foreground text-center mb-6" data-testid="milestone-message">
-                <div className="flex items-center justify-center mb-2">
-                  <Trophy className="text-2xl mr-2" />
-                  <span className="font-semibold text-lg">
-                    {state.completedDays === 7 && "Week 1 Complete!"}
-                    {state.completedDays === 14 && "Two Weeks Strong!"}
-                    {state.completedDays === 21 && "21 Days Achieved!"}
-                    {state.completedDays === 30 && "One Month Complete!"}
-                    {state.completedDays === 60 && "Two Months Strong!"}
-                    {state.completedDays === 90 && "90 Days Mastered!"}
-                  </span>
-                </div>
-                <p className="text-sm opacity-90">{getMilestoneMessage()?.message}</p>
-              </div>
+              <Card className="bg-gradient-to-r from-success to-secondary shadow-xl" data-testid="milestone-message">
+                <CardContent className="p-8 text-success-foreground text-center">
+                  <div className="flex items-center justify-center mb-4">
+                    <Trophy className="text-4xl mr-3" />
+                    <span className="font-bold text-3xl">
+                      {state.completedDays === 7 && "Week 1 Complete!"}
+                      {state.completedDays === 14 && "Two Weeks Strong!"}
+                      {state.completedDays === 21 && "21 Days Achieved!"}
+                      {state.completedDays === 30 && "One Month Complete!"}
+                      {state.completedDays === 60 && "Two Months Strong!"}
+                      {state.completedDays === 90 && "90 Days Mastered!"}
+                    </span>
+                  </div>
+                  <p className="text-lg opacity-95">{getMilestoneMessage()?.message}</p>
+                </CardContent>
+              </Card>
             )}
 
-            {/* Action Buttons */}
-            <div className="space-y-3">
+            {/* Progress History */}
+            <Card className="bg-card shadow-xl">
+              <CardContent className="p-8">
+                <h3 className="text-2xl font-bold text-card-foreground mb-6 text-center">This Week's Progress</h3>
+                <div className="flex justify-center space-x-3" data-testid="week-progress">
+                  {renderWeekProgress()}
+                </div>
+                <div className="mt-6 text-center">
+                  <p className="text-base text-muted-foreground">
+                    Goal started on <span className="font-semibold text-card-foreground" data-testid="text-start-date">{formatDate(state.startDate)}</span>
+                  </p>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Action Button */}
+            <div className="text-center">
               <Button
                 variant="secondary"
-                className="w-full bg-muted hover:bg-accent text-muted-foreground hover:text-accent-foreground font-medium py-3 px-4"
+                className="bg-muted hover:bg-accent text-muted-foreground hover:text-accent-foreground font-semibold py-4 px-8 rounded-xl text-lg"
                 onClick={handleReset}
                 data-testid="button-reset"
               >
-                <RefreshCw className="mr-2 h-4 w-4" />
+                <RefreshCw className="mr-3 h-5 w-5" />
                 Start New Goal
               </Button>
-              
-              <div className="text-center">
-                <p className="text-xs text-muted-foreground">
-                  Goal started on <span className="font-medium" data-testid="text-start-date">{formatDate(state.startDate)}</span>
-                </p>
-              </div>
             </div>
+          </div>
+        </div>
 
-            {/* Progress History */}
-            <div className="mt-8 p-4 bg-muted rounded-lg">
-              <h3 className="font-semibold text-card-foreground mb-3 text-center">This Week</h3>
-              <div className="flex justify-center space-x-2" data-testid="week-progress">
-                {renderWeekProgress()}
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-
-      {/* Footer */}
-      <div className="mt-12 text-center">
-        <p className="text-sm text-muted-foreground">
-          <Heart className="inline mr-1 h-4 w-4 text-red-400" />
-          Built with discipline in mind
-        </p>
+        {/* Footer */}
+        <div className="mt-16 text-center">
+          <p className="text-lg text-muted-foreground">
+            <Heart className="inline mr-2 h-6 w-6 text-red-400" />
+            Built with discipline in mind
+          </p>
+        </div>
       </div>
     </div>
   );
