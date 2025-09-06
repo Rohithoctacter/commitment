@@ -304,8 +304,6 @@ export default function Home() {
           <div className="w-20 h-20 bg-gradient-to-br from-primary to-secondary rounded-full flex items-center justify-center mx-auto mb-6 shadow-2xl">
             <Target className="text-primary-foreground text-3xl" />
           </div>
-          <h1 className="text-4xl font-bold text-card-foreground mb-3">Commitment Tracker</h1>
-          <p className="text-muted-foreground text-xl">Build discipline, one day at a time</p>
         </div>
 
         {/* Setup Card */}
@@ -407,8 +405,6 @@ export default function Home() {
           <div className="w-24 h-24 bg-gradient-to-br from-primary to-secondary rounded-full flex items-center justify-center mx-auto mb-6 shadow-2xl">
             <Target className="text-primary-foreground text-4xl" />
           </div>
-          <h1 className="text-5xl font-bold text-card-foreground mb-4">Commitment Tracker</h1>
-          <p className="text-muted-foreground text-2xl">Your journey to discipline and success</p>
         </div>
 
         {/* Main Stats Grid */}
