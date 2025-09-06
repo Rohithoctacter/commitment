@@ -157,6 +157,29 @@ export default function Home() {
     });
   };
 
+  const loadChallengeFromHistory = (challenge: ChallengeHistory) => {
+    // Save current challenge to history if it exists and is different
+    if (state.goalDays > 0 && state.startDate !== challenge.startDate) {
+      saveChallengeToHistory(state);
+    }
+
+    setState({
+      mode: 'tracking',
+      goalName: challenge.goalName,
+      goalDays: challenge.goalDays,
+      completedDays: challenge.completedDays,
+      startDate: challenge.startDate,
+      lastCheckIn: challenge.endDate
+    });
+
+    setIsSettingsOpen(false);
+
+    toast({
+      title: "Challenge Loaded",
+      description: `Switched to "${challenge.goalName}"`,
+    });
+  };
+
   const handleStartGoal = () => {
     const days = parseInt(goalInput);
     const goalName = goalNameInput.trim() || `${days}-Day Challenge`;
@@ -608,11 +631,12 @@ export default function Home() {
                       challengesHistory.map((challenge) => (
                         <div
                           key={challenge.id}
-                          className="p-3 bg-muted/50 rounded-lg border"
+                          className="p-3 bg-muted/50 rounded-lg border cursor-pointer hover:bg-muted/70 transition-colors duration-200 hover:border-primary/50"
+                          onClick={() => loadChallengeFromHistory(challenge)}
                           data-testid={`history-item-${challenge.id}`}
                         >
                           <div className="flex items-center justify-between mb-1">
-                            <span className="font-medium text-sm">{challenge.title}</span>
+                            <span className="font-medium text-sm">{challenge.goalName}</span>
                             <span className={`text-xs px-2 py-1 rounded-full ${
                               challenge.completed 
                                 ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200' 
