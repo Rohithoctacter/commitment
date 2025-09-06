@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Progress } from "@/components/ui/progress";
 import { useToast } from "@/hooks/use-toast";
-import { Target, Play, CheckCircle, RefreshCw, Trophy, Heart, Lightbulb } from "lucide-react";
+import { Target, Play, CheckCircle, RefreshCw, Trophy, Heart, Lightbulb, Medal, Crown, Star } from "lucide-react";
 
 interface GoalState {
   mode: 'setup' | 'tracking';
@@ -167,6 +167,96 @@ export default function Home() {
     ];
     
     return milestones.find(m => m.days === state.completedDays);
+  };
+
+  const getAchievements = () => {
+    return [
+      { 
+        minPercent: 0, 
+        maxPercent: 10, 
+        title: "Iron Beginner", 
+        description: "First steps taken!", 
+        color: "from-gray-400 to-gray-600",
+        textColor: "text-gray-100",
+        icon: Medal,
+        bgColor: "bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800"
+      },
+      { 
+        minPercent: 11, 
+        maxPercent: 25, 
+        title: "Bronze Warrior", 
+        description: "Building momentum!", 
+        color: "from-amber-600 to-amber-800",
+        textColor: "text-amber-100",
+        icon: Star,
+        bgColor: "bg-gradient-to-br from-amber-50 to-amber-100 dark:from-amber-900 dark:to-amber-800"
+      },
+      { 
+        minPercent: 26, 
+        maxPercent: 50, 
+        title: "Silver Champion", 
+        description: "Strong discipline!", 
+        color: "from-slate-400 to-slate-600",
+        textColor: "text-slate-100",
+        icon: Trophy,
+        bgColor: "bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800"
+      },
+      { 
+        minPercent: 51, 
+        maxPercent: 75, 
+        title: "Gold Master", 
+        description: "Incredible willpower!", 
+        color: "from-yellow-400 to-yellow-600",
+        textColor: "text-yellow-100",
+        icon: Crown,
+        bgColor: "bg-gradient-to-br from-yellow-50 to-yellow-100 dark:from-yellow-900 dark:to-yellow-800"
+      },
+      { 
+        minPercent: 76, 
+        maxPercent: 90, 
+        title: "Platinum Elite", 
+        description: "Elite self-control!", 
+        color: "from-cyan-400 to-cyan-600",
+        textColor: "text-cyan-100",
+        icon: Star,
+        bgColor: "bg-gradient-to-br from-cyan-50 to-cyan-100 dark:from-cyan-900 dark:to-cyan-800"
+      },
+      { 
+        minPercent: 91, 
+        maxPercent: 99, 
+        title: "Diamond Legend", 
+        description: "Legendary dedication!", 
+        color: "from-blue-400 to-blue-600",
+        textColor: "text-blue-100",
+        icon: Crown,
+        bgColor: "bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900 dark:to-blue-800"
+      },
+      { 
+        minPercent: 100, 
+        maxPercent: 100, 
+        title: "Platinum Diamond Master", 
+        description: "Ultimate achievement!", 
+        color: "from-purple-400 via-pink-500 to-purple-600",
+        textColor: "text-purple-100",
+        icon: Trophy,
+        bgColor: "bg-gradient-to-br from-purple-50 to-pink-100 dark:from-purple-900 dark:to-pink-800"
+      }
+    ];
+  };
+
+  const getCurrentAchievement = () => {
+    const achievements = getAchievements();
+    return achievements.find(achievement => 
+      progressPercentage >= achievement.minPercent && progressPercentage <= achievement.maxPercent
+    ) || achievements[0];
+  };
+
+  const getNextAchievement = () => {
+    const achievements = getAchievements();
+    const currentIndex = achievements.findIndex(achievement => 
+      progressPercentage >= achievement.minPercent && progressPercentage <= achievement.maxPercent
+    );
+    return currentIndex < achievements.length - 1 ? achievements[currentIndex + 1] : null;
   };
 
   const renderWeekProgress = () => {
@@ -419,6 +509,56 @@ export default function Home() {
 
           {/* Motivation & Progress Section */}
           <div className="space-y-8">
+            {/* Current Achievement */}
+            <Card className={`${getCurrentAchievement().bgColor} border-2 shadow-xl`}>
+              <CardContent className="p-8">
+                <div className="text-center">
+                  <div className={`w-20 h-20 bg-gradient-to-r ${getCurrentAchievement().color} rounded-full flex items-center justify-center mx-auto mb-4 shadow-2xl`}>
+                    {(() => {
+                      const IconComponent = getCurrentAchievement().icon;
+                      return <IconComponent className={`text-3xl ${getCurrentAchievement().textColor}`} />;
+                    })()}
+                  </div>
+                  <h3 className="text-3xl font-bold text-card-foreground mb-2" data-testid="achievement-title">
+                    {getCurrentAchievement().title}
+                  </h3>
+                  <p className="text-lg text-muted-foreground mb-4" data-testid="achievement-description">
+                    {getCurrentAchievement().description}
+                  </p>
+                  <div className="text-sm text-muted-foreground">
+                    Current Achievement Level • {progressPercentage}% Complete
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Next Achievement Preview */}
+            {getNextAchievement() && (
+              <Card className="bg-gradient-to-br from-muted/50 to-accent/10 border border-dashed border-muted-foreground/30 shadow-lg">
+                <CardContent className="p-6">
+                  <div className="text-center">
+                    <div className="text-lg font-semibold text-muted-foreground mb-3">🎯 Next Achievement</div>
+                    <div className="flex items-center justify-center space-x-4">
+                      <div className={`w-12 h-12 bg-gradient-to-r ${getNextAchievement()!.color} rounded-full flex items-center justify-center shadow-lg opacity-75`}>
+                        {(() => {
+                          const IconComponent = getNextAchievement()!.icon;
+                          return <IconComponent className={`text-xl ${getNextAchievement()!.textColor}`} />;
+                        })()}
+                      </div>
+                      <div className="text-left">
+                        <h4 className="text-xl font-bold text-card-foreground" data-testid="next-achievement-title">
+                          {getNextAchievement()!.title}
+                        </h4>
+                        <p className="text-sm text-muted-foreground" data-testid="next-achievement-description">
+                          Unlock at {getNextAchievement()!.minPercent}% completion
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            )}
+
             {/* Motivational Quote */}
             <Card className="bg-gradient-to-br from-accent/10 to-warning/10 border border-accent/20 shadow-xl">
               <CardContent className="p-8">
