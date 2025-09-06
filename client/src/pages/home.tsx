@@ -445,10 +445,10 @@ export default function Home() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Progress Circle - Left Column */}
           <div className="lg:col-span-1">
-            <Card className="bg-card rounded-xl shadow-lg border border-border h-fit">
-              <CardContent className="p-6">
-                <div className="relative flex items-center justify-center mb-6">
-                  <svg className="progress-circle w-48 h-48" viewBox="0 0 160 160">
+            <Card className="bg-card rounded-xl shadow-lg border border-border flex flex-col">
+              <CardContent className="p-6 flex-1 flex flex-col justify-center">
+                <div className="relative flex items-center justify-center mb-4">
+                  <svg className="progress-circle w-32 h-32" viewBox="0 0 160 160">
                     <circle className="progress-circle-bg" cx="80" cy="80" r="72"></circle>
                     <circle
                       className="progress-circle-fill"
@@ -461,27 +461,27 @@ export default function Home() {
                   </svg>
                   
                   <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
-                    <div className="text-4xl font-bold text-primary mb-1">
+                    <div className="text-3xl font-bold text-primary mb-1">
                       {state.completedDays}
                     </div>
-                    <div className="text-sm text-muted-foreground mb-2">days completed</div>
-                    <div className="text-2xl font-semibold text-card-foreground">
+                    <div className="text-xs text-muted-foreground mb-1">days completed</div>
+                    <div className="text-xl font-semibold text-card-foreground">
                       {progressPercentage}%
                     </div>
                   </div>
                 </div>
 
                 <Button
-                  className="w-full bg-gradient-to-r from-primary to-secondary hover:from-secondary hover:to-primary text-primary-foreground font-bold py-4 px-6 shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 rounded-lg text-lg"
+                  className="w-full bg-gradient-to-r from-primary to-secondary hover:from-secondary hover:to-primary text-primary-foreground font-bold py-3 px-4 shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 rounded-lg text-base"
                   onClick={handleCheckIn}
                   disabled={state.completedDays >= state.goalDays}
                   data-testid="button-check-in"
                 >
-                  <CheckCircle className="mr-2 h-5 w-5" />
+                  <CheckCircle className="mr-2 h-4 w-4" />
                   {state.completedDays >= state.goalDays ? "🎉 Goal Complete!" : "✅ I stayed committed yesterday!"}
                 </Button>
                 
-                <p className="text-sm text-muted-foreground mt-3 text-center">
+                <p className="text-xs text-muted-foreground mt-2 text-center">
                   Last check-in: <span className="font-medium" data-testid="text-last-checkin">{formatLastCheckIn(state.lastCheckIn)}</span>
                 </p>
               </CardContent>
