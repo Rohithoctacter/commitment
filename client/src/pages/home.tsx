@@ -212,11 +212,51 @@ export default function Home() {
     });
   };
 
+  const canCheckIn = () => {
+    if (!state.lastCheckIn) return true;
+    
+    const lastCheckIn = new Date(state.lastCheckIn);
+    const now = new Date();
+    const timeDiff = now.getTime() - lastCheckIn.getTime();
+    const hoursDiff = timeDiff / (1000 * 60 * 60);
+    
+    return hoursDiff >= 24;
+  };
+
+  const getTimeUntilNextCheckIn = () => {
+    if (!state.lastCheckIn) return null;
+    
+    const lastCheckIn = new Date(state.lastCheckIn);
+    const nextCheckIn = new Date(lastCheckIn.getTime() + (24 * 60 * 60 * 1000));
+    const now = new Date();
+    
+    if (now >= nextCheckIn) return null;
+    
+    const timeLeft = nextCheckIn.getTime() - now.getTime();
+    const hoursLeft = Math.floor(timeLeft / (1000 * 60 * 60));
+    const minutesLeft = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+    
+    if (hoursLeft > 0) {
+      return `${hoursLeft}h ${minutesLeft}m`;
+    }
+    return `${minutesLeft}m`;
+  };
+
   const handleCheckIn = () => {
     if (state.completedDays >= state.goalDays) {
       toast({
         title: "Goal Already Complete!",
         description: "Congratulations on completing your goal. Start a new one to continue!",
+      });
+      return;
+    }
+
+    if (!canCheckIn()) {
+      const timeLeft = getTimeUntilNextCheckIn();
+      toast({
+        title: "Check-in Too Soon!",
+        description: `You can check in again in ${timeLeft}. One check-in per 24 hours.`,
+        variant: "destructive"
       });
       return;
     }
@@ -758,13 +798,18 @@ export default function Home() {
                 </div>
 
                 <Button
-                  className="w-full bg-gradient-to-r from-primary to-secondary hover:from-secondary hover:to-primary text-primary-foreground font-bold py-3 px-4 shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 rounded-lg text-base"
+                  className="w-full bg-gradient-to-r from-primary to-secondary hover:from-secondary hover:to-primary text-primary-foreground font-bold py-3 px-4 shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 rounded-lg text-base disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
                   onClick={handleCheckIn}
-                  disabled={state.completedDays >= state.goalDays}
+                  disabled={state.completedDays >= state.goalDays || !canCheckIn()}
                   data-testid="button-check-in"
                 >
                   <CheckCircle className="mr-2 h-4 w-4" />
-                  {state.completedDays >= state.goalDays ? "🎉 Goal Complete!" : "✅ I stayed committed yesterday!"}
+                  {state.completedDays >= state.goalDays 
+                    ? "🎉 Goal Complete!" 
+                    : !canCheckIn() 
+                    ? `⏰ Next check-in in ${getTimeUntilNextCheckIn()}`
+                    : "✅ I stayed committed yesterday!"
+                  }
                 </Button>
                 
                 <p className="text-xs text-muted-foreground mt-2 text-center">
