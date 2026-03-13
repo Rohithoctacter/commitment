@@ -213,6 +213,38 @@ export default function Home() {
     });
   };
 
+  const handleRestartGoal = (goalId: string) => {
+    const isActive = goalId === (state.startDate || 'active');
+    const goal = isActive
+      ? { goalName: state.goalName, goalDays: state.goalDays }
+      : challengesHistory.find(h => h.id === goalId);
+    if (!goal) return;
+
+    const newStartDate = new Date().toISOString();
+
+    const freshState: GoalState = {
+      mode: 'tracking',
+      goalName: goal.goalName,
+      goalDays: goal.goalDays,
+      completedDays: 0,
+      startDate: newStartDate,
+      lastCheckIn: null
+    };
+
+    if (!isActive && state.goalDays > 0) {
+      saveChallengeToHistory(state);
+    }
+
+    setChallengesHistory(prev => prev.filter(h => h.id !== goalId));
+    setState(freshState);
+    setIsSettingsOpen(false);
+
+    toast({
+      title: "Goal Restarted",
+      description: `"${goal.goalName}" has been restarted from day 0.`,
+    });
+  };
+
   const handleStartGoal = () => {
     const days = parseInt(goalInput);
     const goalName = goalNameInput.trim() || `${days}-Day Goal`;
@@ -221,6 +253,24 @@ export default function Home() {
       toast({
         title: "Invalid Goal",
         description: "Please enter a number between 1 and 365 days.",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    const nameLower = goalName.toLowerCase();
+    const activeConflict =
+      state.goalDays > 0 &&
+      !( state.completedDays >= state.goalDays ) &&
+      state.goalName.toLowerCase() === nameLower;
+    const historyConflict = challengesHistory.find(
+      h => h.goalName.toLowerCase() === nameLower && !h.completed
+    );
+
+    if (activeConflict || historyConflict) {
+      toast({
+        title: "Goal name already in use",
+        description: "You already have an active goal with this name. Complete or restart it first.",
         variant: "destructive"
       });
       return;
@@ -807,12 +857,14 @@ export default function Home() {
                         return (
                           <div
                             key={goal.id}
-                            className="p-3 bg-muted/50 rounded-lg border cursor-pointer hover:bg-muted/70 transition-colors duration-200 hover:border-primary/50"
-                            onClick={() => !isActive && loadChallengeFromHistory(goal)}
+                            className="p-3 bg-muted/50 rounded-lg border transition-colors duration-200 hover:border-primary/50"
                             data-testid={`history-item-${goal.id}`}
                           >
                             <div className="flex items-center justify-between mb-1">
-                              <div className="flex items-center gap-2">
+                              <div
+                                className="flex items-center gap-2 flex-1 cursor-pointer"
+                                onClick={() => !isActive && loadChallengeFromHistory(goal)}
+                              >
                                 <span className="font-medium text-sm">{goal.goalName}</span>
                                 {isActive && (
                                   <span className="text-xs px-1.5 py-0.5 rounded-full bg-primary/10 text-primary font-medium">
@@ -820,15 +872,28 @@ export default function Home() {
                                   </span>
                                 )}
                               </div>
-                              <span className={`text-xs px-2 py-1 rounded-full ${
-                                goal.completed
-                                  ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200'
-                                  : 'bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-200'
-                              }`}>
-                                {goal.percentage}%
-                              </span>
+                              <div className="flex items-center gap-2">
+                                <span className={`text-xs px-2 py-1 rounded-full ${
+                                  goal.completed
+                                    ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200'
+                                    : 'bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-200'
+                                }`}>
+                                  {goal.percentage}%
+                                </span>
+                                <button
+                                  onClick={() => handleRestartGoal(goal.id)}
+                                  className="p-1 rounded hover:bg-muted text-muted-foreground hover:text-foreground transition-colors"
+                                  title="Restart goal"
+                                  data-testid={`button-restart-goal-${goal.id}`}
+                                >
+                                  <RotateCcw className="h-3.5 w-3.5" />
+                                </button>
+                              </div>
                             </div>
-                            <div className="text-xs text-muted-foreground">
+                            <div
+                              className="text-xs text-muted-foreground cursor-pointer"
+                              onClick={() => !isActive && loadChallengeFromHistory(goal)}
+                            >
                               {goal.completedDays}/{goal.goalDays} days completed
                             </div>
                             <div className="text-xs text-muted-foreground">
