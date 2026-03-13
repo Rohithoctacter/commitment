@@ -848,46 +848,46 @@ export default function Home() {
         {/* Main Stats Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
           {/* Days Set */}
-          <Card className="bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-950 dark:to-blue-900 border-blue-200 dark:border-blue-800 shadow-lg">
+          <Card className="bg-gradient-to-br from-blue-50 to-blue-100 dark:from-gray-900 dark:to-gray-900 border-blue-200 dark:border-blue-500/20 shadow-lg">
             <CardContent className="p-4 text-center">
               <div className="text-3xl font-bold text-blue-600 dark:text-blue-400 mb-2" data-testid="text-total-days">
                 {state.goalDays}
               </div>
-              <div className="text-sm font-semibold text-blue-700 dark:text-blue-300">Days Set</div>
-              <div className="text-xs text-blue-600 dark:text-blue-400 mt-1">Your commitment period</div>
+              <div className="text-sm font-semibold text-blue-700 dark:text-blue-400">Days Set</div>
+              <div className="text-xs text-blue-600 dark:text-blue-500/80 mt-1">Your commitment period</div>
             </CardContent>
           </Card>
 
           {/* Days Done */}
-          <Card className="bg-gradient-to-br from-green-50 to-green-100 dark:from-green-950 dark:to-green-900 border-green-200 dark:border-green-800 shadow-lg">
+          <Card className="bg-gradient-to-br from-green-50 to-green-100 dark:from-gray-900 dark:to-gray-900 border-green-200 dark:border-green-500/20 shadow-lg">
             <CardContent className="p-4 text-center">
               <div className="text-3xl font-bold text-green-600 dark:text-green-400 mb-2" data-testid="text-completed-days">
                 {state.completedDays}
               </div>
-              <div className="text-sm font-semibold text-green-700 dark:text-green-300">Days Done</div>
-              <div className="text-xs text-green-600 dark:text-green-400 mt-1">Successfully completed</div>
+              <div className="text-sm font-semibold text-green-700 dark:text-green-400">Days Done</div>
+              <div className="text-xs text-green-600 dark:text-green-500/80 mt-1">Successfully completed</div>
             </CardContent>
           </Card>
 
           {/* Days Left */}
-          <Card className="bg-gradient-to-br from-orange-50 to-orange-100 dark:from-orange-950 dark:to-orange-900 border-orange-200 dark:border-orange-800 shadow-lg">
+          <Card className="bg-gradient-to-br from-orange-50 to-orange-100 dark:from-gray-900 dark:to-gray-900 border-orange-200 dark:border-orange-500/20 shadow-lg">
             <CardContent className="p-4 text-center">
               <div className="text-3xl font-bold text-orange-600 dark:text-orange-400 mb-2" data-testid="text-remaining-days">
                 {remainingDays}
               </div>
-              <div className="text-sm font-semibold text-orange-700 dark:text-orange-300">Days Left</div>
-              <div className="text-xs text-orange-600 dark:text-orange-400 mt-1">Keep pushing forward</div>
+              <div className="text-sm font-semibold text-orange-700 dark:text-orange-400">Days Left</div>
+              <div className="text-xs text-orange-600 dark:text-orange-500/80 mt-1">Keep pushing forward</div>
             </CardContent>
           </Card>
 
           {/* Percentage Done */}
-          <Card className="bg-gradient-to-br from-purple-50 to-purple-100 dark:from-purple-950 dark:to-purple-900 border-purple-200 dark:border-purple-800 shadow-lg">
+          <Card className="bg-gradient-to-br from-purple-50 to-purple-100 dark:from-gray-900 dark:to-gray-900 border-purple-200 dark:border-purple-500/20 shadow-lg">
             <CardContent className="p-4 text-center">
               <div className="text-3xl font-bold text-purple-600 dark:text-purple-400 mb-2" data-testid="text-progress-percentage">
                 {progressPercentage}%
               </div>
-              <div className="text-sm font-semibold text-purple-700 dark:text-purple-300">Completed</div>
-              <div className="text-xs text-purple-600 dark:text-purple-400 mt-1">Of your goal achieved</div>
+              <div className="text-sm font-semibold text-purple-700 dark:text-purple-400">Completed</div>
+              <div className="text-xs text-purple-600 dark:text-purple-500/80 mt-1">Of your goal achieved</div>
             </CardContent>
           </Card>
         </div>
