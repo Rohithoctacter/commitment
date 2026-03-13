@@ -513,18 +513,25 @@ export default function Home() {
   };
 
   if (state.mode === 'setup') {
+    const dark = isDarkMode;
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center p-4" style={{ background: 'radial-gradient(ellipse at top, #1a1f2e 0%, #0d0f14 60%, #080a0e 100%)' }}>
-
+      <div
+        className="min-h-screen flex flex-col items-center justify-center p-4 transition-colors duration-300"
+        style={{
+          background: dark
+            ? 'radial-gradient(ellipse at top, #1a1f2e 0%, #0d0f14 60%, #080a0e 100%)'
+            : 'radial-gradient(ellipse at top, #ecfdf5 0%, #f9fafb 60%, #f3f4f6 100%)'
+        }}
+      >
         {/* Heading */}
         <div className="text-center mb-10">
-          <h1 className="text-5xl font-bold text-white leading-tight">
+          <h1 className="text-5xl font-bold leading-tight" style={{ color: dark ? '#ffffff' : '#111827' }}>
             Commit to
           </h1>
           <h1 className="text-5xl font-bold leading-tight" style={{ fontFamily: "'Playfair Display', serif", fontStyle: 'italic', color: '#f0a500' }}>
             Greatness
           </h1>
-          <p className="mt-4 text-gray-400 text-base leading-relaxed">
+          <p className="mt-4 text-base leading-relaxed" style={{ color: dark ? '#9ca3af' : '#6b7280' }}>
             Set your goal. Show up every day.<br />
             Build the discipline that transforms lives.
           </p>
@@ -532,17 +539,28 @@ export default function Home() {
 
         {/* Setup Card */}
         <div className="w-full max-w-lg mx-auto">
-          <div className="rounded-2xl p-8 fade-in" style={{ background: 'rgba(255,255,255,0.06)', backdropFilter: 'blur(12px)', border: '1px solid rgba(255,255,255,0.08)' }}>
+          <div
+            className="rounded-2xl p-8 fade-in transition-colors duration-300"
+            style={{
+              background: dark ? 'rgba(255,255,255,0.06)' : '#ffffff',
+              backdropFilter: dark ? 'blur(12px)' : 'none',
+              border: dark ? '1px solid rgba(255,255,255,0.08)' : '1px solid #e5e7eb',
+              boxShadow: dark ? 'none' : '0 4px 24px rgba(0,0,0,0.07)'
+            }}
+          >
             <div className="space-y-6">
               <div>
-                <label htmlFor="goalName" className="block text-xs font-semibold tracking-widest mb-3" style={{ color: '#9ca3af', letterSpacing: '0.15em' }}>
+                <label htmlFor="goalName" className="block text-xs font-semibold mb-3" style={{ color: dark ? '#9ca3af' : '#6b7280', letterSpacing: '0.15em' }}>
                   GOAL NAME
                 </label>
                 <Input
                   type="text"
                   id="goalName"
-                  className="w-full p-4 text-base rounded-xl border-0 text-white placeholder:text-gray-500"
-                  style={{ background: 'rgba(255,255,255,0.07)' }}
+                  className="w-full p-4 text-base rounded-xl border-0"
+                  style={{
+                    background: dark ? 'rgba(255,255,255,0.07)' : '#f3f4f6',
+                    color: dark ? '#ffffff' : '#111827',
+                  }}
                   placeholder="e.g., Daily Exercise, Read 30 min, Meditation..."
                   value={goalNameInput}
                   onChange={(e) => setGoalNameInput(e.target.value)}
@@ -551,15 +569,18 @@ export default function Home() {
               </div>
 
               <div>
-                <label htmlFor="goalDays" className="block text-xs font-semibold tracking-widest mb-3" style={{ color: '#9ca3af', letterSpacing: '0.15em' }}>
+                <label htmlFor="goalDays" className="block text-xs font-semibold mb-3" style={{ color: dark ? '#9ca3af' : '#6b7280', letterSpacing: '0.15em' }}>
                   DURATION
                 </label>
                 <div className="relative">
                   <Input
                     type="number"
                     id="goalDays"
-                    className="w-full p-5 text-center text-2xl font-semibold border-0 text-white placeholder:text-gray-500 rounded-xl"
-                    style={{ background: 'rgba(255,255,255,0.07)' }}
+                    className="w-full p-5 text-center text-2xl font-semibold border-0 rounded-xl"
+                    style={{
+                      background: dark ? 'rgba(255,255,255,0.07)' : '#f3f4f6',
+                      color: dark ? '#ffffff' : '#111827',
+                    }}
                     placeholder="30"
                     min="1"
                     max="365"
@@ -567,7 +588,7 @@ export default function Home() {
                     onChange={(e) => setGoalInput(e.target.value)}
                     data-testid="input-goal-days"
                   />
-                  <div className="absolute right-5 top-1/2 transform -translate-y-1/2 text-gray-400 text-base font-medium pointer-events-none">
+                  <div className="absolute right-5 top-1/2 transform -translate-y-1/2 text-base font-medium pointer-events-none" style={{ color: dark ? '#9ca3af' : '#6b7280' }}>
                     days
                   </div>
                 </div>
@@ -577,8 +598,12 @@ export default function Home() {
                 {[{ label: '7d', days: 7, testId: 'button-quick-7' }, { label: '21d', days: 21, testId: 'button-quick-21' }, { label: '30d', days: 30, testId: 'button-quick-30' }, { label: '90d', days: 90, testId: 'button-quick-90' }].map(({ label, days, testId }) => (
                   <button
                     key={days}
-                    className="py-3 px-2 text-sm font-semibold rounded-xl text-white transition-all duration-200 hover:scale-105"
-                    style={{ background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.12)' }}
+                    className="py-3 px-2 text-sm font-semibold rounded-xl transition-all duration-200 hover:scale-105"
+                    style={{
+                      background: dark ? 'rgba(255,255,255,0.1)' : '#e5e7eb',
+                      border: dark ? '1px solid rgba(255,255,255,0.12)' : '1px solid #d1d5db',
+                      color: dark ? '#ffffff' : '#374151',
+                    }}
                     onClick={() => setQuickGoal(days)}
                     data-testid={testId}
                   >
@@ -603,7 +628,7 @@ export default function Home() {
         {/* My Goals List */}
         {challengesHistory.length > 0 && (
           <div className="w-full max-w-lg mx-auto mt-8">
-            <h2 className="text-xs font-semibold tracking-widest mb-4" style={{ color: '#9ca3af', letterSpacing: '0.15em' }}>
+            <h2 className="text-xs font-semibold tracking-widest mb-4" style={{ color: dark ? '#9ca3af' : '#6b7280', letterSpacing: '0.15em' }}>
               MY GOALS
             </h2>
             <div className="space-y-3">
@@ -615,29 +640,33 @@ export default function Home() {
                     onClick={() => loadChallengeFromHistory(challenge)}
                     data-testid={`setup-goal-item-${challenge.id}`}
                     className="w-full text-left rounded-xl p-4 transition-all duration-200 hover:scale-[1.01] group"
-                    style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.08)' }}
+                    style={{
+                      background: dark ? 'rgba(255,255,255,0.06)' : '#ffffff',
+                      border: dark ? '1px solid rgba(255,255,255,0.08)' : '1px solid #e5e7eb',
+                      boxShadow: dark ? 'none' : '0 2px 8px rgba(0,0,0,0.05)'
+                    }}
                   >
                     <div className="flex items-center justify-between mb-2">
                       <div className="flex items-center gap-3">
                         <div className="rounded-full p-1.5" style={{ background: 'rgba(52,211,153,0.15)' }}>
                           <Target className="h-4 w-4" style={{ color: 'hsl(158, 64%, 52%)' }} />
                         </div>
-                        <span className="font-semibold text-white text-sm">{challenge.goalName}</span>
+                        <span className="font-semibold text-sm" style={{ color: dark ? '#ffffff' : '#111827' }}>{challenge.goalName}</span>
                       </div>
                       <div className="flex items-center gap-2">
                         {challenge.completed && (
-                          <span className="text-xs font-semibold px-2 py-0.5 rounded-full" style={{ background: 'rgba(52,211,153,0.15)', color: 'hsl(158, 64%, 52%)' }}>
+                          <span className="text-xs font-semibold px-2 py-0.5 rounded-full" style={{ background: 'rgba(52,211,153,0.15)', color: 'hsl(158, 64%, 42%)' }}>
                             Done
                           </span>
                         )}
-                        <span className="text-xs text-gray-400">{challenge.completedDays}/{challenge.goalDays}d</span>
-                        <ChevronRight className="h-4 w-4 text-gray-500 group-hover:text-white transition-colors" />
+                        <span className="text-xs" style={{ color: dark ? '#9ca3af' : '#6b7280' }}>{challenge.completedDays}/{challenge.goalDays}d</span>
+                        <ChevronRight className="h-4 w-4 transition-colors" style={{ color: dark ? '#6b7280' : '#9ca3af' }} />
                       </div>
                     </div>
-                    <div className="w-full rounded-full h-1.5" style={{ background: 'rgba(255,255,255,0.1)' }}>
+                    <div className="w-full rounded-full h-1.5" style={{ background: dark ? 'rgba(255,255,255,0.1)' : '#e5e7eb' }}>
                       <div
                         className="h-1.5 rounded-full transition-all duration-500"
-                        style={{ width: `${pct}%`, background: challenge.completed ? 'hsl(158, 64%, 52%)' : 'hsl(158, 64%, 42%)' }}
+                        style={{ width: `${pct}%`, background: 'hsl(158, 64%, 42%)' }}
                       />
                     </div>
                   </button>
