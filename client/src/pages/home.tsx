@@ -168,13 +168,25 @@ export default function Home() {
 
   const clearChallengesHistory = () => {
     setChallengesHistory([]);
-    // Explicitly clear from localStorage to ensure it's deleted
     localStorage.removeItem('challengesHistory');
     localStorage.setItem('challengesHistory', JSON.stringify([]));
-    
+
+    setState({
+      mode: 'setup',
+      goalName: '',
+      goalDays: 0,
+      completedDays: 0,
+      startDate: null,
+      lastCheckIn: null
+    });
+    localStorage.removeItem('commitmentTracker');
+    setGoalInput("");
+    setGoalNameInput("");
+    setIsSettingsOpen(false);
+
     toast({
-      title: "History Cleared",
-      description: "Your challenges history has been permanently deleted.",
+      title: "All Goals Cleared",
+      description: "Your goals history has been permanently deleted.",
     });
   };
 
