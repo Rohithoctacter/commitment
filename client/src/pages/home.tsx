@@ -8,7 +8,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { Switch } from "@/components/ui/switch";
 import { Separator } from "@/components/ui/separator";
 import { useToast } from "@/hooks/use-toast";
-import { Target, Play, CheckCircle, RefreshCw, Trophy, Heart, Lightbulb, Medal, Crown, Star, Settings, Moon, Sun, Calendar, RotateCcw, ChevronRight } from "lucide-react";
+import { Target, Play, CheckCircle, RefreshCw, Trophy, Heart, Lightbulb, Medal, Crown, Star, Settings, Moon, Sun, Calendar, RotateCcw, ChevronRight, Trash2 } from "lucide-react";
 
 interface GoalState {
   mode: 'setup' | 'tracking';
@@ -243,6 +243,39 @@ export default function Home() {
       title: "Goal Restarted",
       description: `"${goal.goalName}" has been restarted from day 0.`,
     });
+  };
+
+  const handleDropGoal = (goalId: string) => {
+    const isActive = goalId === (state.startDate || 'active');
+
+    if (isActive) {
+      const goalName = state.goalName;
+      setState({
+        mode: 'setup',
+        goalName: '',
+        goalDays: 0,
+        completedDays: 0,
+        startDate: null,
+        lastCheckIn: null
+      });
+      localStorage.removeItem('commitmentTracker');
+      setGoalInput("");
+      setGoalNameInput("");
+      setChallengesHistory(prev => prev.filter(h => h.startDate !== state.startDate));
+      setIsSettingsOpen(false);
+      toast({
+        title: "Goal Dropped",
+        description: `"${goalName}" has been dropped.`,
+      });
+    } else {
+      const goal = challengesHistory.find(h => h.id === goalId);
+      if (!goal) return;
+      setChallengesHistory(prev => prev.filter(h => h.id !== goalId));
+      toast({
+        title: "Goal Dropped",
+        description: `"${goal.goalName}" has been removed from your history.`,
+      });
+    }
   };
 
   const handleStartGoal = () => {
@@ -887,6 +920,14 @@ export default function Home() {
                                   data-testid={`button-restart-goal-${goal.id}`}
                                 >
                                   <RotateCcw className="h-3.5 w-3.5" />
+                                </button>
+                                <button
+                                  onClick={() => handleDropGoal(goal.id)}
+                                  className="p-1 rounded hover:bg-red-100 dark:hover:bg-red-900/30 text-muted-foreground hover:text-red-600 dark:hover:text-red-400 transition-colors"
+                                  title="Drop goal"
+                                  data-testid={`button-drop-goal-${goal.id}`}
+                                >
+                                  <Trash2 className="h-3.5 w-3.5" />
                                 </button>
                               </div>
                             </div>
