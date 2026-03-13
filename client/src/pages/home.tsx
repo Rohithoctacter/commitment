@@ -584,7 +584,14 @@ export default function Home() {
         {/* Header with Settings */}
         <div className="flex justify-between items-center mb-6">
           <div className="flex items-center space-x-3">
-            <Target className="h-8 w-8 text-primary" />
+            <button
+              onClick={handleReset}
+              className="rounded-full p-1 hover:bg-primary/10 transition-colors duration-200 focus:outline-none"
+              data-testid="button-logo-home"
+              title="Start new goal"
+            >
+              <Target className="h-8 w-8 text-primary" />
+            </button>
             <div>
               <h1 className="text-2xl font-bold text-card-foreground">{state.goalName || 'Goal Tracker'}</h1>
               {state.goalName && <p className="text-sm text-muted-foreground">Challenge Dashboard</p>}
