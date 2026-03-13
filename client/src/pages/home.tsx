@@ -1204,7 +1204,7 @@ export default function Home() {
           <Button
             variant="secondary"
             className="bg-muted hover:bg-accent text-muted-foreground hover:text-accent-foreground font-semibold py-3 px-6 rounded-lg text-base"
-            onClick={handleReset}
+            onClick={handleGoToSetup}
             data-testid="button-reset"
           >
             <RefreshCw className="mr-2 h-4 w-4" />
