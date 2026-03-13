@@ -848,7 +848,7 @@ export default function Home() {
         {/* Main Stats Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
           {/* Days Set */}
-          <Card className="bg-gradient-to-br from-blue-50 to-blue-100 dark:from-gray-900 dark:to-gray-900 border-blue-200 dark:border-blue-500/20 shadow-lg">
+          <Card className="bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900 dark:to-blue-800 border-blue-200 dark:border-blue-700 shadow-lg">
             <CardContent className="p-4 text-center">
               <div className="text-3xl font-bold text-blue-600 dark:text-blue-400 mb-2" data-testid="text-total-days">
                 {state.goalDays}
@@ -859,7 +859,7 @@ export default function Home() {
           </Card>
 
           {/* Days Done */}
-          <Card className="bg-gradient-to-br from-green-50 to-green-100 dark:from-gray-900 dark:to-gray-900 border-green-200 dark:border-green-500/20 shadow-lg">
+          <Card className="bg-gradient-to-br from-green-50 to-green-100 dark:from-green-900 dark:to-green-800 border-green-200 dark:border-green-700 shadow-lg">
             <CardContent className="p-4 text-center">
               <div className="text-3xl font-bold text-green-600 dark:text-green-400 mb-2" data-testid="text-completed-days">
                 {state.completedDays}
@@ -870,7 +870,7 @@ export default function Home() {
           </Card>
 
           {/* Days Left */}
-          <Card className="bg-gradient-to-br from-orange-50 to-orange-100 dark:from-gray-900 dark:to-gray-900 border-orange-200 dark:border-orange-500/20 shadow-lg">
+          <Card className="bg-gradient-to-br from-orange-50 to-orange-100 dark:from-amber-900 dark:to-amber-800 border-orange-200 dark:border-amber-700 shadow-lg">
             <CardContent className="p-4 text-center">
               <div className="text-3xl font-bold text-orange-600 dark:text-orange-400 mb-2" data-testid="text-remaining-days">
                 {remainingDays}
@@ -881,7 +881,7 @@ export default function Home() {
           </Card>
 
           {/* Percentage Done */}
-          <Card className="bg-gradient-to-br from-purple-50 to-purple-100 dark:from-gray-900 dark:to-gray-900 border-purple-200 dark:border-purple-500/20 shadow-lg">
+          <Card className="bg-gradient-to-br from-purple-50 to-purple-100 dark:from-purple-900 dark:to-purple-800 border-purple-200 dark:border-purple-700 shadow-lg">
             <CardContent className="p-4 text-center">
               <div className="text-3xl font-bold text-purple-600 dark:text-purple-400 mb-2" data-testid="text-progress-percentage">
                 {progressPercentage}%
