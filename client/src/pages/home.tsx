@@ -89,7 +89,14 @@ export default function Home() {
   
   const [challengesHistory, setChallengesHistory] = useState<ChallengeHistory[]>(() => {
     const saved = localStorage.getItem('challengesHistory');
-    return saved ? JSON.parse(saved) : [];
+    if (!saved) return [];
+    const parsed: ChallengeHistory[] = JSON.parse(saved);
+    const seen = new Set<string>();
+    return parsed.filter(h => {
+      if (seen.has(h.startDate)) return false;
+      seen.add(h.startDate);
+      return true;
+    });
   });
 
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
@@ -134,8 +141,8 @@ export default function Home() {
   };
 
   const saveChallengeToHistory = (challenge: GoalState) => {
-    const historyItem: ChallengeHistory = {
-      id: Date.now().toString(),
+    const updatedItem: ChallengeHistory = {
+      id: challenge.startDate || Date.now().toString(),
       title: challenge.goalName || `${challenge.goalDays}-Day Challenge`,
       goalName: challenge.goalName || `${challenge.goalDays}-Day Challenge`,
       goalDays: challenge.goalDays,
@@ -145,8 +152,16 @@ export default function Home() {
       completed: challenge.completedDays >= challenge.goalDays,
       percentage: Math.round((challenge.completedDays / challenge.goalDays) * 100)
     };
-    
-    setChallengesHistory(prev => [historyItem, ...prev].slice(0, 50)); // Keep only latest 50
+
+    setChallengesHistory(prev => {
+      const existing = prev.findIndex(h => h.startDate === challenge.startDate);
+      if (existing !== -1) {
+        const updated = [...prev];
+        updated[existing] = updatedItem;
+        return updated;
+      }
+      return [updatedItem, ...prev].slice(0, 50);
+    });
   };
 
   const clearChallengesHistory = () => {
