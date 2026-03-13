@@ -292,6 +292,15 @@ export default function Home() {
     });
   };
 
+  const handleGoToSetup = () => {
+    if (state.goalDays > 0) {
+      saveChallengeToHistory(state);
+    }
+    setState(prev => ({ ...prev, mode: 'setup' }));
+    setGoalInput("");
+    setGoalNameInput("");
+  };
+
   const handleReset = () => {
     if (confirm("Are you sure you want to start a new goal? This will reset your current progress.")) {
       // Save current challenge to history before resetting
@@ -647,10 +656,10 @@ export default function Home() {
         <div className="flex justify-between items-center mb-6">
           <div className="flex items-center space-x-3">
             <button
-              onClick={handleReset}
+              onClick={handleGoToSetup}
               className="rounded-full p-1 hover:bg-primary/10 transition-colors duration-200 focus:outline-none"
               data-testid="button-logo-home"
-              title="Start new goal"
+              title="Back to goals"
             >
               <Target className="h-8 w-8 text-primary" />
             </button>
