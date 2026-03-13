@@ -324,8 +324,17 @@ export default function Home() {
     });
   };
 
+  const isGoalInactive = (lastCheckIn: string | null): boolean => {
+    if (!lastCheckIn) return false;
+    const last = new Date(lastCheckIn);
+    const now = new Date();
+    const hoursDiff = (now.getTime() - last.getTime()) / (1000 * 60 * 60);
+    return hoursDiff > 48;
+  };
+
   const canCheckIn = () => {
     if (!state.lastCheckIn) return true;
+    if (isGoalInactive(state.lastCheckIn)) return false;
     
     const lastCheckIn = new Date(state.lastCheckIn);
     const now = new Date();
@@ -359,6 +368,15 @@ export default function Home() {
       toast({
         title: "Goal Already Complete!",
         description: "Congratulations on completing your goal. Start a new one to continue!",
+      });
+      return;
+    }
+
+    if (isGoalInactive(state.lastCheckIn)) {
+      toast({
+        title: "Goal Inactive",
+        description: "You missed a day, so this goal is now inactive. You can restart it to continue.",
+        variant: "destructive"
       });
       return;
     }
@@ -886,7 +904,8 @@ export default function Home() {
                       }
 
                       return allGoals.map((goal, idx) => {
-                        const isActive = idx === 0 && activeGoal !== null;
+                        const isCurrent = idx === 0 && activeGoal !== null;
+                        const goalInactive = !goal.completed && isGoalInactive(goal.lastCheckIn ?? null);
                         return (
                           <div
                             key={goal.id}
@@ -896,13 +915,19 @@ export default function Home() {
                             <div className="flex items-center justify-between mb-1">
                               <div
                                 className="flex items-center gap-2 flex-1 cursor-pointer"
-                                onClick={() => !isActive && loadChallengeFromHistory(goal)}
+                                onClick={() => !isCurrent && loadChallengeFromHistory(goal)}
                               >
                                 <span className="font-medium text-sm">{goal.goalName}</span>
-                                {isActive && (
-                                  <span className="text-xs px-1.5 py-0.5 rounded-full bg-primary/10 text-primary font-medium">
-                                    Active
-                                  </span>
+                                {!goal.completed && (
+                                  goalInactive ? (
+                                    <span className="text-xs px-1.5 py-0.5 rounded-full bg-red-100 text-red-700 dark:bg-red-900/40 dark:text-red-300 font-medium">
+                                      Inactive
+                                    </span>
+                                  ) : (
+                                    <span className="text-xs px-1.5 py-0.5 rounded-full bg-green-100 text-green-700 dark:bg-green-900/40 dark:text-green-300 font-medium">
+                                      Active
+                                    </span>
+                                  )
                                 )}
                               </div>
                               <div className="flex items-center gap-2">
@@ -933,7 +958,7 @@ export default function Home() {
                             </div>
                             <div
                               className="text-xs text-muted-foreground cursor-pointer"
-                              onClick={() => !isActive && loadChallengeFromHistory(goal)}
+                              onClick={() => !isCurrent && loadChallengeFromHistory(goal)}
                             >
                               {goal.completedDays}/{goal.goalDays} days completed
                             </div>
@@ -1043,12 +1068,14 @@ export default function Home() {
                 <Button
                   className="w-full bg-gradient-to-r from-primary to-secondary hover:from-secondary hover:to-primary text-primary-foreground font-bold py-3 px-4 shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 rounded-lg text-base disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
                   onClick={handleCheckIn}
-                  disabled={state.completedDays >= state.goalDays || !canCheckIn()}
+                  disabled={state.completedDays >= state.goalDays || !canCheckIn() || isGoalInactive(state.lastCheckIn)}
                   data-testid="button-check-in"
                 >
                   <CheckCircle className="mr-2 h-4 w-4" />
                   {state.completedDays >= state.goalDays 
-                    ? "🎉 Goal Complete!" 
+                    ? "🎉 Goal Complete!"
+                    : isGoalInactive(state.lastCheckIn)
+                    ? "⛔ Goal Inactive — restart to continue"
                     : !canCheckIn() 
                     ? `⏰ Next check-in in ${getTimeUntilNextCheckIn()}`
                     : "✅ I stayed committed!"
