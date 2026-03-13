@@ -144,8 +144,8 @@ export default function Home() {
   const saveChallengeToHistory = (challenge: GoalState) => {
     const updatedItem: ChallengeHistory = {
       id: challenge.startDate || Date.now().toString(),
-      title: challenge.goalName || `${challenge.goalDays}-Day Challenge`,
-      goalName: challenge.goalName || `${challenge.goalDays}-Day Challenge`,
+      title: challenge.goalName || `${challenge.goalDays}-Day Goal`,
+      goalName: challenge.goalName || `${challenge.goalDays}-Day Goal`,
       goalDays: challenge.goalDays,
       completedDays: challenge.completedDays,
       startDate: challenge.startDate || '',
@@ -208,14 +208,14 @@ export default function Home() {
     setIsSettingsOpen(false);
 
     toast({
-      title: "Challenge Loaded",
+      title: "Goal Loaded",
       description: `Switched to "${challenge.goalName}"`,
     });
   };
 
   const handleStartGoal = () => {
     const days = parseInt(goalInput);
-    const goalName = goalNameInput.trim() || `${days}-Day Challenge`;
+    const goalName = goalNameInput.trim() || `${days}-Day Goal`;
     
     if (!days || days < 1 || days > 365) {
       toast({
@@ -708,7 +708,7 @@ export default function Home() {
             </button>
             <div>
               <h1 className="text-2xl font-bold text-card-foreground">{state.goalName || 'Goal Tracker'}</h1>
-              {state.goalName && <p className="text-sm text-muted-foreground">Challenge Dashboard</p>}
+              {state.goalName && <p className="text-sm text-muted-foreground">Goal Dashboard</p>}
             </div>
           </div>
           
@@ -751,14 +751,14 @@ export default function Home() {
 
                 <Separator />
 
-                {/* Challenges History */}
+                {/* Goals History */}
                 <div className="space-y-3">
                   <div className="flex items-center justify-between">
                     <h3 className="text-sm font-medium flex items-center space-x-2">
                       <Calendar className="h-4 w-4" />
-                      <span>Challenges History</span>
+                      <span>My Goals</span>
                     </h3>
-                    {challengesHistory.length > 0 && (
+                    {(challengesHistory.length > 0 || state.goalDays > 0) && (
                       <Button
                         variant="outline"
                         size="sm"
@@ -773,37 +773,71 @@ export default function Home() {
                   </div>
 
                   <div className="max-h-60 overflow-y-auto space-y-2">
-                    {challengesHistory.length === 0 ? (
-                      <p className="text-sm text-muted-foreground text-center py-4">
-                        No challenges completed yet
-                      </p>
-                    ) : (
-                      challengesHistory.map((challenge) => (
-                        <div
-                          key={challenge.id}
-                          className="p-3 bg-muted/50 rounded-lg border cursor-pointer hover:bg-muted/70 transition-colors duration-200 hover:border-primary/50"
-                          onClick={() => loadChallengeFromHistory(challenge)}
-                          data-testid={`history-item-${challenge.id}`}
-                        >
-                          <div className="flex items-center justify-between mb-1">
-                            <span className="font-medium text-sm">{challenge.goalName}</span>
-                            <span className={`text-xs px-2 py-1 rounded-full ${
-                              challenge.completed 
-                                ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200' 
-                                : 'bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-200'
-                            }`}>
-                              {challenge.percentage}%
-                            </span>
+                    {(() => {
+                      const activeGoal: ChallengeHistory | null = state.goalDays > 0 ? {
+                        id: state.startDate || 'active',
+                        title: state.goalName,
+                        goalName: state.goalName,
+                        goalDays: state.goalDays,
+                        completedDays: state.completedDays,
+                        startDate: state.startDate || '',
+                        endDate: null,
+                        lastCheckIn: state.lastCheckIn,
+                        completed: state.completedDays >= state.goalDays,
+                        percentage: Math.round((state.completedDays / state.goalDays) * 100)
+                      } : null;
+
+                      const historyWithoutActive = challengesHistory.filter(
+                        h => h.startDate !== state.startDate
+                      );
+                      const allGoals = activeGoal
+                        ? [activeGoal, ...historyWithoutActive]
+                        : historyWithoutActive;
+
+                      if (allGoals.length === 0) {
+                        return (
+                          <p className="text-sm text-muted-foreground text-center py-4">
+                            No goals set yet
+                          </p>
+                        );
+                      }
+
+                      return allGoals.map((goal, idx) => {
+                        const isActive = idx === 0 && activeGoal !== null;
+                        return (
+                          <div
+                            key={goal.id}
+                            className="p-3 bg-muted/50 rounded-lg border cursor-pointer hover:bg-muted/70 transition-colors duration-200 hover:border-primary/50"
+                            onClick={() => !isActive && loadChallengeFromHistory(goal)}
+                            data-testid={`history-item-${goal.id}`}
+                          >
+                            <div className="flex items-center justify-between mb-1">
+                              <div className="flex items-center gap-2">
+                                <span className="font-medium text-sm">{goal.goalName}</span>
+                                {isActive && (
+                                  <span className="text-xs px-1.5 py-0.5 rounded-full bg-primary/10 text-primary font-medium">
+                                    Active
+                                  </span>
+                                )}
+                              </div>
+                              <span className={`text-xs px-2 py-1 rounded-full ${
+                                goal.completed
+                                  ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200'
+                                  : 'bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-200'
+                              }`}>
+                                {goal.percentage}%
+                              </span>
+                            </div>
+                            <div className="text-xs text-muted-foreground">
+                              {goal.completedDays}/{goal.goalDays} days completed
+                            </div>
+                            <div className="text-xs text-muted-foreground">
+                              Started {new Date(goal.startDate).toLocaleDateString()}
+                            </div>
                           </div>
-                          <div className="text-xs text-muted-foreground">
-                            {challenge.completedDays}/{challenge.goalDays} days completed
-                          </div>
-                          <div className="text-xs text-muted-foreground">
-                            {new Date(challenge.startDate).toLocaleDateString()} - {new Date(challenge.endDate || '').toLocaleDateString()}
-                          </div>
-                        </div>
-                      ))
-                    )}
+                        );
+                      });
+                    })()}
                   </div>
                 </div>
               </div>
