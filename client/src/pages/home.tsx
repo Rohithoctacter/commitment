@@ -8,7 +8,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { Switch } from "@/components/ui/switch";
 import { Separator } from "@/components/ui/separator";
 import { useToast } from "@/hooks/use-toast";
-import { Target, Play, CheckCircle, RefreshCw, Trophy, Heart, Lightbulb, Medal, Crown, Star, Settings, Moon, Sun, Calendar, RotateCcw } from "lucide-react";
+import { Target, Play, CheckCircle, RefreshCw, Trophy, Heart, Lightbulb, Medal, Crown, Star, Settings, Moon, Sun, Calendar, RotateCcw, ChevronRight } from "lucide-react";
 
 interface GoalState {
   mode: 'setup' | 'tracking';
@@ -573,6 +573,53 @@ export default function Home() {
             </div>
           </div>
         </div>
+
+        {/* My Goals List */}
+        {challengesHistory.length > 0 && (
+          <div className="w-full max-w-lg mx-auto mt-8">
+            <h2 className="text-xs font-semibold tracking-widest mb-4" style={{ color: '#9ca3af', letterSpacing: '0.15em' }}>
+              MY GOALS
+            </h2>
+            <div className="space-y-3">
+              {challengesHistory.map((challenge) => {
+                const pct = Math.min(challenge.percentage, 100);
+                return (
+                  <button
+                    key={challenge.id}
+                    onClick={() => loadChallengeFromHistory(challenge)}
+                    data-testid={`setup-goal-item-${challenge.id}`}
+                    className="w-full text-left rounded-xl p-4 transition-all duration-200 hover:scale-[1.01] group"
+                    style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.08)' }}
+                  >
+                    <div className="flex items-center justify-between mb-2">
+                      <div className="flex items-center gap-3">
+                        <div className="rounded-full p-1.5" style={{ background: 'rgba(52,211,153,0.15)' }}>
+                          <Target className="h-4 w-4" style={{ color: 'hsl(158, 64%, 52%)' }} />
+                        </div>
+                        <span className="font-semibold text-white text-sm">{challenge.goalName}</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        {challenge.completed && (
+                          <span className="text-xs font-semibold px-2 py-0.5 rounded-full" style={{ background: 'rgba(52,211,153,0.15)', color: 'hsl(158, 64%, 52%)' }}>
+                            Done
+                          </span>
+                        )}
+                        <span className="text-xs text-gray-400">{challenge.completedDays}/{challenge.goalDays}d</span>
+                        <ChevronRight className="h-4 w-4 text-gray-500 group-hover:text-white transition-colors" />
+                      </div>
+                    </div>
+                    <div className="w-full rounded-full h-1.5" style={{ background: 'rgba(255,255,255,0.1)' }}>
+                      <div
+                        className="h-1.5 rounded-full transition-all duration-500"
+                        style={{ width: `${pct}%`, background: challenge.completed ? 'hsl(158, 64%, 52%)' : 'hsl(158, 64%, 42%)' }}
+                      />
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        )}
       </div>
     );
   }
