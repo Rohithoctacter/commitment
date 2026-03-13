@@ -488,108 +488,90 @@ export default function Home() {
 
   if (state.mode === 'setup') {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center p-4 bg-gradient-to-br from-primary/5 via-background to-accent/5 dark:from-primary/10 dark:via-gray-900 dark:to-accent/10">
+      <div className="min-h-screen flex flex-col items-center justify-center p-4" style={{ background: 'radial-gradient(ellipse at top, #1a1f2e 0%, #0d0f14 60%, #080a0e 100%)' }}>
+
+        {/* Heading */}
+        <div className="text-center mb-10">
+          <h1 className="text-5xl font-bold text-white leading-tight">
+            Commit to
+          </h1>
+          <h1 className="text-5xl font-bold leading-tight" style={{ fontFamily: "'Playfair Display', serif", fontStyle: 'italic', color: '#f0a500' }}>
+            Greatness
+          </h1>
+          <p className="mt-4 text-gray-400 text-base leading-relaxed">
+            Set your goal. Show up every day.<br />
+            Build the discipline that transforms lives.
+          </p>
+        </div>
 
         {/* Setup Card */}
         <div className="w-full max-w-lg mx-auto">
-          <Card className="bg-card rounded-2xl shadow-2xl border border-border fade-in backdrop-blur-sm">
-            <CardContent className="p-10">
-              <div className="text-center mb-8">
-                <h2 className="text-3xl font-semibold text-card-foreground mb-4">Set Your Goal</h2>
-                <p className="text-muted-foreground text-lg">Choose how many days you want to commit to your journey</p>
+          <div className="rounded-2xl p-8 fade-in" style={{ background: 'rgba(255,255,255,0.06)', backdropFilter: 'blur(12px)', border: '1px solid rgba(255,255,255,0.08)' }}>
+            <div className="space-y-6">
+              <div>
+                <label htmlFor="goalName" className="block text-xs font-semibold tracking-widest mb-3" style={{ color: '#9ca3af', letterSpacing: '0.15em' }}>
+                  GOAL NAME
+                </label>
+                <Input
+                  type="text"
+                  id="goalName"
+                  className="w-full p-4 text-base rounded-xl border-0 text-white placeholder:text-gray-500"
+                  style={{ background: 'rgba(255,255,255,0.07)' }}
+                  placeholder="e.g., Daily Exercise, Read 30 min, Meditation..."
+                  value={goalNameInput}
+                  onChange={(e) => setGoalNameInput(e.target.value)}
+                  data-testid="input-goal-name"
+                />
               </div>
 
-              <div className="space-y-8">
-                <div>
-                  <Label htmlFor="goalName" className="block text-base font-medium text-card-foreground mb-3">
-                    Goal Name
-                  </Label>
+              <div>
+                <label htmlFor="goalDays" className="block text-xs font-semibold tracking-widest mb-3" style={{ color: '#9ca3af', letterSpacing: '0.15em' }}>
+                  DURATION
+                </label>
+                <div className="relative">
                   <Input
-                    type="text"
-                    id="goalName"
-                    className="w-full p-4 text-lg border-2 focus:ring-4 focus:ring-primary/20"
-                    placeholder="e.g., Daily Exercise, Read Books, Learn Spanish..."
-                    value={goalNameInput}
-                    onChange={(e) => setGoalNameInput(e.target.value)}
-                    data-testid="input-goal-name"
+                    type="number"
+                    id="goalDays"
+                    className="w-full p-5 text-center text-2xl font-semibold border-0 text-white placeholder:text-gray-500 rounded-xl"
+                    style={{ background: 'rgba(255,255,255,0.07)' }}
+                    placeholder="30"
+                    min="1"
+                    max="365"
+                    value={goalInput}
+                    onChange={(e) => setGoalInput(e.target.value)}
+                    data-testid="input-goal-days"
                   />
-                </div>
-
-                <div>
-                  <Label htmlFor="goalDays" className="block text-base font-medium text-card-foreground mb-3">
-                    Number of Days
-                  </Label>
-                  <div className="relative">
-                    <Input
-                      type="number"
-                      id="goalDays"
-                      className="w-full p-6 text-center text-3xl font-bold border-2 focus:ring-4 focus:ring-primary/20"
-                      placeholder="30"
-                      min="1"
-                      max="365"
-                      value={goalInput}
-                      onChange={(e) => setGoalInput(e.target.value)}
-                      data-testid="input-goal-days"
-                    />
-                    <div className="absolute right-4 top-1/2 transform -translate-y-1/2 text-muted-foreground text-lg font-medium">
-                      days
-                    </div>
+                  <div className="absolute right-5 top-1/2 transform -translate-y-1/2 text-gray-400 text-base font-medium pointer-events-none">
+                    days
                   </div>
                 </div>
-
-                <div className="grid grid-cols-3 gap-3">
-                  <Button
-                    variant="secondary"
-                    className="p-4 bg-gray-100 dark:bg-gray-800 border-2 border-gray-300 dark:border-gray-600 text-gray-800 dark:text-gray-200 hover:bg-primary hover:text-primary-foreground hover:border-primary text-base font-semibold rounded-xl transition-all duration-200 hover:scale-105"
-                    onClick={() => setQuickGoal(7)}
-                    data-testid="button-quick-7"
-                  >
-                    7 Days
-                  </Button>
-                  <Button
-                    variant="secondary"
-                    className="p-4 bg-gray-100 dark:bg-gray-800 border-2 border-gray-300 dark:border-gray-600 text-gray-800 dark:text-gray-200 hover:bg-primary hover:text-primary-foreground hover:border-primary text-base font-semibold rounded-xl transition-all duration-200 hover:scale-105"
-                    onClick={() => setQuickGoal(30)}
-                    data-testid="button-quick-30"
-                  >
-                    30 Days
-                  </Button>
-                  <Button
-                    variant="secondary"
-                    className="p-4 bg-gray-100 dark:bg-gray-800 border-2 border-gray-300 dark:border-gray-600 text-gray-800 dark:text-gray-200 hover:bg-primary hover:text-primary-foreground hover:border-primary text-base font-semibold rounded-xl transition-all duration-200 hover:scale-105"
-                    onClick={() => setQuickGoal(90)}
-                    data-testid="button-quick-90"
-                  >
-                    90 Days
-                  </Button>
-                </div>
-
-                <Button
-                  className="w-full bg-gradient-to-r from-primary to-secondary hover:from-secondary hover:to-primary text-primary-foreground font-bold py-6 px-8 shadow-2xl hover:shadow-3xl transform hover:scale-105 transition-all duration-300 rounded-xl text-lg"
-                  onClick={handleStartGoal}
-                  data-testid="button-start-journey"
-                >
-                  <Play className="mr-3 h-5 w-5" />
-                  Start My Journey
-                </Button>
               </div>
 
-              <div className="mt-8 p-6 bg-gradient-to-r from-accent/10 to-warning/10 rounded-xl border border-accent/20">
-                <p className="text-base text-muted-foreground text-center">
-                  <Lightbulb className="inline mr-2 h-5 w-5 text-warning" />
-                  Tip: Start with a realistic goal. You can always set a new challenge later!
-                </p>
+              <div className="grid grid-cols-4 gap-3">
+                {[{ label: '7d', days: 7, testId: 'button-quick-7' }, { label: '21d', days: 21, testId: 'button-quick-21' }, { label: '30d', days: 30, testId: 'button-quick-30' }, { label: '90d', days: 90, testId: 'button-quick-90' }].map(({ label, days, testId }) => (
+                  <button
+                    key={days}
+                    className="py-3 px-2 text-sm font-semibold rounded-xl text-white transition-all duration-200 hover:scale-105"
+                    style={{ background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.12)' }}
+                    onClick={() => setQuickGoal(days)}
+                    data-testid={testId}
+                  >
+                    {label}
+                  </button>
+                ))}
               </div>
-            </CardContent>
-          </Card>
-        </div>
 
-        {/* Footer */}
-        <div className="mt-16 text-center">
-          <p className="text-base text-muted-foreground">
-            <Heart className="inline mr-2 h-5 w-5 text-red-400" />
-            Built with discipline in mind
-          </p>
+              <Button
+                className="w-full font-bold py-6 px-8 shadow-2xl transform hover:scale-105 transition-all duration-300 rounded-xl text-base text-white"
+                style={{ background: 'hsl(158, 64%, 42%)', boxShadow: '0 4px 24px rgba(52, 211, 153, 0.3)' }}
+                onClick={handleStartGoal}
+                data-testid="button-start-journey"
+              >
+                <Play className="mr-3 h-5 w-5" />
+                Start My Journey
+              </Button>
+            </div>
+          </div>
         </div>
       </div>
     );
