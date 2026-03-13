@@ -638,7 +638,7 @@ export default function Home() {
       >
         {/* Heading */}
         <div className="text-center mb-10">
-          <h1 className="text-5xl leading-tight" style={{ fontFamily: "'Montserrat', sans-serif", fontWeight: 300, letterSpacing: '0.04em', color: dark ? '#d1d5db' : '#374151' }}>
+          <h1 className="text-5xl font-bold leading-tight" style={{ fontFamily: "'Playfair Display', serif", color: dark ? '#ffffff' : '#111827' }}>
             Commit to
           </h1>
           <h1 className="text-5xl font-bold leading-tight" style={{ fontFamily: "'Playfair Display', serif", fontStyle: 'italic', color: '#f0a500' }}>
