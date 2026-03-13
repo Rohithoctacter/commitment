@@ -27,6 +27,7 @@ interface ChallengeHistory {
   completedDays: number;
   startDate: string;
   endDate: string | null;
+  lastCheckIn: string | null;
   completed: boolean;
   percentage: number;
 }
@@ -149,6 +150,7 @@ export default function Home() {
       completedDays: challenge.completedDays,
       startDate: challenge.startDate || '',
       endDate: new Date().toISOString(),
+      lastCheckIn: challenge.lastCheckIn,
       completed: challenge.completedDays >= challenge.goalDays,
       percentage: Math.round((challenge.completedDays / challenge.goalDays) * 100)
     };
@@ -188,7 +190,7 @@ export default function Home() {
       goalDays: challenge.goalDays,
       completedDays: challenge.completedDays,
       startDate: challenge.startDate,
-      lastCheckIn: challenge.endDate
+      lastCheckIn: challenge.lastCheckIn ?? null
     });
 
     setIsSettingsOpen(false);
