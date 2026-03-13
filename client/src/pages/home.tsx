@@ -945,7 +945,7 @@ export default function Home() {
                     ? "🎉 Goal Complete!" 
                     : !canCheckIn() 
                     ? `⏰ Next check-in in ${getTimeUntilNextCheckIn()}`
-                    : "✅ I stayed committed yesterday!"
+                    : "✅ I stayed committed!"
                   }
                 </Button>
                 
